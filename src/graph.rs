@@ -13,16 +13,21 @@ impl Graph {
             edges: Vec::new(),
         }
     }
+
+    fn node(&self, n: &Nd) -> Option<&Node> {
+        self.nodes.get(*n)
+    }
 }
 
 struct Node {
-    ty: String,
+    color: String,
+    n_workers: usize,
     info: String,
     percent: f32,
-    color: String,
+    rows: u32,
     time: String,
     total_cost: f32,
-    rows: u32,
+    ty: String,
 }
 
 impl Node {
@@ -45,13 +50,14 @@ impl Node {
         };
 
         Self {
-            ty: plan.node.to_string(),
-            info,
-            percent,
             color,
+            info,
+            n_workers: plan.workers.len(),
+            percent,
+            rows: plan.rows,
             time,
             total_cost: plan.total_cost,
-            rows: plan.rows,
+            ty: plan.node.to_string(),
         }
     }
 }
@@ -96,29 +102,34 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
     }
 
     fn node_label<'b>(&'b self, n: &Nd) -> dot::LabelText<'b> {
-        let node = &self.nodes[*n];
+        let node = self.node(n).unwrap();
 
-        let label = format!(
-            r#"<table cellborder="0" cellspacing="5">
-    <tr><td align="left"><b>{ty}</b></td>{time}</tr>
-    <tr><td colspan="2" align="left">{info}</td></tr>
-    <tr><td colspan="2" border="1" bgcolor="{color};{percent:.2}:white">Score: {score}</td></tr>
-    <tr><td colspan="2" align="left">Rows: {row}</td></tr>
-</table>"#,
-            ty = node.ty,
-            info = node.info,
-            score = node.total_cost,
-            percent = node.percent,
-            color = node.color,
-            row = node.rows,
-            time = node.time,
-        );
+        let mut label = format!(r#"<table border="0" cellborder="0" cellspacing="5">"#);
+        label.push_str(&format!(r#"<tr><td align="left"><b>{}</b></td>{}</tr>"#, node.ty, node.time));
+        label.push_str(&format!(r#"<tr><td colspan="2" align="left">{}</td></tr>"#, node.info));
+        if node.n_workers > 0 {
+            label.push_str(&format!(r#"<tr><td colspan="2" align="left">Workers: {}</td></tr>"#, node.n_workers));
+        }
+        label.push_str(&format!(r#"<tr><td colspan="2" border="1" bgcolor="{};{:.2}:white">Score: {}</td></tr>"#, node.color, node.percent, node.total_cost));
+        label.push_str(&format!(r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#, node.rows));
+        label.push_str("</table>");
 
         dot::LabelText::HtmlStr(label.into())
     }
 
-    fn node_shape(&'a self, _: &Nd) -> Option<dot::LabelText<'a>> {
-        Some(dot::LabelText::LabelStr("plain".into()))
+    fn node_shape(&'a self, n: &Nd) -> Option<dot::LabelText<'a>> {
+        let node = match self.node(n) {
+            Some(node) => node,
+            None => return None,
+        };
+
+        let shape = if node.n_workers > 0 {
+            "folder"
+        } else {
+            "box"
+        };
+
+        Some(dot::LabelText::LabelStr(shape.into()))
     }
 
     fn node_style(&'a self, _: &Nd) -> dot::Style {

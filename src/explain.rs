@@ -34,6 +34,8 @@ pub(crate) struct Plan {
     pub startup_cost: f32,
     #[serde(rename = "Total Cost")]
     pub total_cost: f32,
+    #[serde(rename = "Workers", default)]
+    pub workers: Vec<Worker>,
 }
 
 #[derive(Debug, serde::Deserialize)]
@@ -270,4 +272,18 @@ pub(crate) struct Trigger {
     time: f32,
     #[serde(rename = "Calls")]
     calls: u32,
+}
+
+#[derive(Debug, serde::Deserialize)]
+pub(crate) struct Worker {
+    #[serde(rename = "Worker Number")]
+    number: usize,
+    #[serde(rename = "Actual Startup Time")]
+    actual_startup_time: f32,
+    #[serde(rename = "Actual Total Time")]
+    actual_total_time: f32,
+    #[serde(rename = "Actual Rows")]
+    actual_rows: usize,
+    #[serde(rename = "Actual Loops")]
+    actual_loops: usize,
 }
