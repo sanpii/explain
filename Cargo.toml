@@ -6,7 +6,6 @@ edition = "2018"
 
 [dependencies]
 dot = "0.1"
-lazy_static = "1.4"
 serde_json = "1.0"
 structopt = "0.3"
 

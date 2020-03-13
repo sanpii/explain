@@ -1,9 +1,14 @@
+pub(crate) fn dot(explain: &crate::Explain) -> String {
+    Graph::from(explain).render()
+}
+
 type Nd = usize;
 type Ed<'a> = &'a (usize, usize);
 
 struct Graph {
     nodes: Vec<Node>,
     edges: Vec<(usize, usize)>,
+    current_id: usize,
 }
 
 impl Graph {
@@ -11,7 +16,38 @@ impl Graph {
         Self {
             nodes: Vec::new(),
             edges: Vec::new(),
+            current_id: 0,
         }
+    }
+
+    fn from(explain: &crate::Explain) -> Self {
+        let mut graph = Self::new();
+
+        graph.plan(&explain.plan, None, &explain.plan);
+
+        graph
+    }
+
+    fn plan(&mut self, root: &crate::Plan, root_id: Option<usize>, plan: &crate::Plan) {
+        let id = self.current_id;
+        self.current_id += 1;
+
+        self.nodes.push(Node::from(root, plan));
+        if let Some(root_id) = root_id {
+            self.edges.push((root_id, id));
+        }
+
+        for child in &plan.plans {
+            self.plan(root, Some(id), child);
+        }
+    }
+
+    fn render(&self) -> String {
+        let mut output = Vec::new();
+
+        dot::render(self, &mut output).unwrap();
+
+        std::str::from_utf8(&output).unwrap().to_string()
     }
 
     fn node(&self, n: &Nd) -> Option<&Node> {
@@ -45,7 +81,12 @@ impl Node {
             } else {
                 let color = duration_color(time_percent);
 
-                format!("<td bgcolor=\"{}\">{} ms | {} %</td>", color, time.round(), time_percent)
+                format!(
+                    "<td bgcolor=\"{}\">{} ms | {} %</td>",
+                    color,
+                    time.round(),
+                    time_percent
+                )
             }
         } else {
             String::new()
@@ -64,36 +105,6 @@ impl Node {
     }
 }
 
-pub(crate) fn dot(explain: &crate::Explain) -> String {
-    let mut graph = Graph::new();
-
-    self::plan(&mut graph, &explain.plan, None, &explain.plan);
-
-    let mut output = Vec::new();
-
-    dot::render(&graph, &mut output).unwrap();
-
-    std::str::from_utf8(&output).unwrap().to_string()
-}
-
-lazy_static::lazy_static! {
-    static ref ID: std::sync::Mutex<usize> = std::sync::Mutex::new(0);
-}
-
-fn plan(graph: &mut Graph, root: &crate::Plan, root_id: Option<usize>, plan: &crate::Plan) {
-    let id = *ID.lock().unwrap();
-    *ID.lock().unwrap() += 1;
-
-    graph.nodes.push(Node::from(root, plan));
-    if let Some(root_id) = root_id {
-        graph.edges.push((root_id, id));
-    }
-
-    for child in &plan.plans {
-        self::plan(graph, root, Some(id), child);
-    }
-}
-
 impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
     fn graph_id(&'a self) -> dot::Id<'a> {
         dot::Id::new("explain").unwrap()
@@ -107,13 +118,28 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
         let node = self.node(n).unwrap();
 
         let mut label = format!(r#"<table border="0" cellborder="0" cellspacing="5">"#);
-        label.push_str(&format!(r#"<tr><td align="left"><b>{}</b></td>{}</tr>"#, node.ty, node.time));
-        label.push_str(&format!(r#"<tr><td colspan="2" align="left">{}</td></tr>"#, node.info));
+        label.push_str(&format!(
+            r#"<tr><td align="left"><b>{}</b></td>{}</tr>"#,
+            node.ty, node.time
+        ));
+        label.push_str(&format!(
+            r#"<tr><td colspan="2" align="left">{}</td></tr>"#,
+            node.info
+        ));
         if node.n_workers > 0 {
-            label.push_str(&format!(r#"<tr><td colspan="2" align="left">Workers: {}</td></tr>"#, node.n_workers));
+            label.push_str(&format!(
+                r#"<tr><td colspan="2" align="left">Workers: {}</td></tr>"#,
+                node.n_workers
+            ));
         }
-        label.push_str(&format!(r#"<tr><td colspan="2" border="1" bgcolor="{};{:.2}:white">Score: {}</td></tr>"#, node.color, node.percent, node.total_cost));
-        label.push_str(&format!(r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#, node.rows));
+        label.push_str(&format!(
+            r#"<tr><td colspan="2" border="1" bgcolor="{};{:.2}:white">Score: {}</td></tr>"#,
+            node.color, node.percent, node.total_cost
+        ));
+        label.push_str(&format!(
+            r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#,
+            node.rows
+        ));
         label.push_str("</table>");
 
         dot::LabelText::HtmlStr(label.into())
@@ -125,11 +151,7 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
             None => return None,
         };
 
-        let shape = if node.n_workers > 0 {
-            "folder"
-        } else {
-            "box"
-        };
+        let shape = if node.n_workers > 0 { "folder" } else { "box" };
 
         Some(dot::LabelText::LabelStr(shape.into()))
     }
@@ -229,11 +251,13 @@ fn hue2rgb(p: f32, q: f32, t: f32) -> f32 {
 
 fn info(plan: &crate::Plan) -> String {
     match &plan.node {
-        crate::Node::Aggregate { keys, .. } => if keys.len() > 0 {
-            format!("by {}", keys.join(", "))
-        } else {
-            String::new()
-        },
+        crate::Node::Aggregate { keys, .. } => {
+            if keys.len() > 0 {
+                format!("by {}", keys.join(", "))
+            } else {
+                String::new()
+            }
+        }
         crate::Node::HashJoin {
             join_type,
             hash_cond,
@@ -252,8 +276,7 @@ fn time(plan: &crate::Plan) -> Option<f32> {
         }
 
         Some(time)
-    }
-    else {
+    } else {
         None
     }
 }
