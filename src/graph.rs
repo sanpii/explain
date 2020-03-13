@@ -120,8 +120,15 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
 
     fn node_label<'b>(&'b self, n: &Nd) -> dot::LabelText<'b> {
         let node = self.node(n).unwrap();
-        let percent = (node.cost / self.max_cost).min(0.99).max(0.1);
+        let percent = node.cost / self.max_cost;
         let color = color(percent);
+        let bgcolor = if percent < 0.1 {
+            String::new()
+        } else if percent > 0.99 {
+            format!("bgcolor=\"{}\"", color)
+        } else {
+            format!("bgcolor=\"{};{:.2}:white\"", color, percent)
+        };
 
         let mut label = format!(r#"<table border="0" cellborder="0" cellspacing="5">"#);
         label.push_str(&format!(
@@ -138,9 +145,10 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
                 node.n_workers
             ));
         }
+
         label.push_str(&format!(
-            r#"<tr><td colspan="2" border="1" bgcolor="{};{:.2}:white">Cost: {:.02}</td></tr>"#,
-            color, percent, node.cost
+            r#"<tr><td colspan="2" border="1" {}>Cost: {:.02}</td></tr>"#,
+            bgcolor, node.cost
         ));
         label.push_str(&format!(
             r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#,
