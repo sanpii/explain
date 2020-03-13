@@ -1,0 +1,70 @@
+
+graph "" {
+    node[shape=plain,style=rounded];
+
+    
+node0[
+    label=<
+    <table cellborder="0" cellspacing="5">
+        <tr><td align="left"><b>Nested Loop</b></td><td>&lt; 1 ms | 100 %</td></tr>
+        <tr><td colspan="2" align="left"></td></tr>
+        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 28.52</td></tr>
+        <tr><td colspan="2" align="left">Rows: 5</td></tr>
+    </table>
+>
+];
+
+
+node1[
+    label=<
+    <table cellborder="0" cellspacing="5">
+        <tr><td align="left"><b>Bitmap Heap Scan</b></td><td>&lt; 1 ms | 86 %</td></tr>
+        <tr><td colspan="2" align="left"></td></tr>
+        <tr><td colspan="2" border="1" bgcolor="#c1740a;0.71:white">Score: 20.27</td></tr>
+        <tr><td colspan="2" align="left">Rows: 5</td></tr>
+    </table>
+>
+];
+
+
+node2[
+    label=<
+    <table cellborder="0" cellspacing="5">
+        <tr><td align="left"><b>Bitmap Index Scan</b></td><td>&lt; 1 ms | 57 %</td></tr>
+        <tr><td colspan="2" align="left"></td></tr>
+        <tr><td colspan="2" border="1" bgcolor="#a2c10a;0.41:white">Score: 11.8</td></tr>
+        <tr><td colspan="2" align="left">Rows: 5</td></tr>
+    </table>
+>
+];
+
+node1 -- node2
+node0 -- node1
+
+node3[
+    label=<
+    <table cellborder="0" cellspacing="5">
+        <tr><td align="left"><b>Materialize</b></td><td>&lt; 1 ms | 0 %</td></tr>
+        <tr><td colspan="2" align="left"></td></tr>
+        <tr><td colspan="2" border="1" bgcolor="#73c10a;0.29:white">Score: 8.17</td></tr>
+        <tr><td colspan="2" align="left">Rows: 1</td></tr>
+    </table>
+>
+];
+
+
+node4[
+    label=<
+    <table cellborder="0" cellspacing="5">
+        <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+        <tr><td colspan="2" align="left"></td></tr>
+        <tr><td colspan="2" border="1" bgcolor="#73c10a;0.29:white">Score: 8.17</td></tr>
+        <tr><td colspan="2" align="left">Rows: 1</td></tr>
+    </table>
+>
+];
+
+node3 -- node4
+node0 -- node3
+
+}
