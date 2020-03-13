@@ -43,7 +43,9 @@ impl Node {
             if time < 1. {
                 format!("<td>&lt; 1 ms | {} %</td>", time_percent)
             } else {
-                format!("<td>{} ms | {} %</td>", time, time_percent)
+                let color = duration_color(time_percent);
+
+                format!("<td bgcolor=\"{}\">{} ms | {} %</td>", color, time.round(), time_percent)
             }
         } else {
             String::new()
@@ -159,6 +161,18 @@ impl<'a> dot::GraphWalk<'a, Nd, Ed<'a>> for Graph {
     }
 }
 
+fn duration_color(percent: f32) -> &'static str {
+    if percent > 90. {
+        "#880000"
+    } else if percent > 40. {
+        "#ee8800"
+    } else if percent > 10. {
+        "#fddb61"
+    } else {
+        "white"
+    }
+}
+
 fn color(percent: f32) -> String {
     let hue = (100. - percent * 100.) * 1.2 / 360.;
     let (red, green, blue) = hsl_to_rgb(hue, 0.9, 0.4);
@@ -232,7 +246,14 @@ fn info(plan: &crate::Plan) -> String {
 }
 
 fn time(plan: &crate::Plan) -> Option<f32> {
-    // @TODO soustraire le actual_total_time des enfant direct
+    if let Some(mut time) = plan.actual_total_time {
+        for child in &plan.plans {
+            time -= child.actual_total_time.unwrap_or_default();
+        }
 
-    plan.actual_total_time
+        Some(time)
+    }
+    else {
+        None
+    }
 }
