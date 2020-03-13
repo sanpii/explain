@@ -57,8 +57,8 @@ impl Graph {
         std::str::from_utf8(&output).unwrap().to_string()
     }
 
-    fn node(&self, n: &Nd) -> Option<&Node> {
-        self.nodes.get(*n)
+    fn node(&self, n: Nd) -> Option<&Node> {
+        self.nodes.get(n)
     }
 }
 
@@ -67,7 +67,6 @@ struct Node {
     info: String,
     rows: u32,
     time: String,
-    total_cost: f32,
     cost: f32,
     ty: String,
 }
@@ -102,7 +101,6 @@ impl Node {
             n_workers: plan.workers.len(),
             rows: plan.rows,
             time,
-            total_cost: plan.total_cost,
             ty: plan.node.to_string(),
             cost,
         }
@@ -119,7 +117,7 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
     }
 
     fn node_label<'b>(&'b self, n: &Nd) -> dot::LabelText<'b> {
-        let node = self.node(n).unwrap();
+        let node = self.node(*n).unwrap();
         let percent = node.cost / self.max_cost;
         let color = color(percent);
         let bgcolor = if percent < 0.1 {
@@ -130,7 +128,7 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
             format!("bgcolor=\"{};{:.2}:white\"", color, percent)
         };
 
-        let mut label = format!(r#"<table border="0" cellborder="0" cellspacing="5">"#);
+        let mut label = r#"<table border="0" cellborder="0" cellspacing="5">"#.to_string();
         label.push_str(&format!(
             r#"<tr><td align="left"><b>{}</b></td>{}</tr>"#,
             node.ty, node.time
@@ -160,7 +158,7 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
     }
 
     fn node_shape(&'a self, n: &Nd) -> Option<dot::LabelText<'a>> {
-        let node = match self.node(n) {
+        let node = match self.node(*n) {
             Some(node) => node,
             None => return None,
         };
@@ -188,11 +186,11 @@ impl<'a> dot::GraphWalk<'a, Nd, Ed<'a>> for Graph {
         self.edges.iter().collect()
     }
 
-    fn source(&self, e: &Ed) -> Nd {
+    fn source(&self, e: &Ed<'_>) -> Nd {
         e.0
     }
 
-    fn target(&self, e: &Ed) -> Nd {
+    fn target(&self, e: &Ed<'_>) -> Nd {
         e.1
     }
 }
@@ -266,10 +264,10 @@ fn hue2rgb(p: f32, q: f32, t: f32) -> f32 {
 fn info(plan: &crate::Plan) -> String {
     match &plan.node {
         crate::Node::Aggregate { keys, .. } => {
-            if keys.len() > 0 {
-                format!("by {}", keys.join(", "))
-            } else {
+            if keys.is_empty() {
                 String::new()
+            } else {
+                format!("by {}", keys.join(", "))
             }
         }
         crate::Node::HashJoin {
