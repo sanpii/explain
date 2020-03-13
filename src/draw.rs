@@ -7,7 +7,8 @@ graph "" {{
     node[shape=plain,style=rounded];
 
     {}
-}}"#,
+}}
+"#,
         s
     )
 }

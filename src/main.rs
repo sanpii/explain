@@ -70,7 +70,7 @@ fn main() -> Result<()> {
         let mut output = std::fs::File::create(output)?;
         output.write_all(graph.as_bytes())?;
     } else {
-        println!("{}", graph);
+        print!("{}", graph);
     }
 
     Ok(())
