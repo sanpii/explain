@@ -9,6 +9,7 @@ struct Graph {
     nodes: Vec<Node>,
     edges: Vec<(usize, usize)>,
     current_id: usize,
+    max_cost: f32,
 }
 
 impl Graph {
@@ -17,6 +18,7 @@ impl Graph {
             nodes: Vec::new(),
             edges: Vec::new(),
             current_id: 0,
+            max_cost: 0.,
         }
     }
 
@@ -32,7 +34,12 @@ impl Graph {
         let id = self.current_id;
         self.current_id += 1;
 
-        self.nodes.push(Node::from(root, plan));
+        let node = Node::from(root, plan);
+        if node.cost > self.max_cost {
+            self.max_cost = node.cost;
+        }
+        self.nodes.push(node);
+
         if let Some(root_id) = root_id {
             self.edges.push((root_id, id));
         }
@@ -56,21 +63,19 @@ impl Graph {
 }
 
 struct Node {
-    color: String,
     n_workers: usize,
     info: String,
-    percent: f32,
     rows: u32,
     time: String,
     total_cost: f32,
+    cost: f32,
     ty: String,
 }
 
 impl Node {
     fn from(root: &crate::Plan, plan: &crate::Plan) -> Self {
         let info = info(&plan);
-        let percent = (plan.total_cost / root.total_cost).min(0.99).max(0.1);
-        let color = color(percent);
+        let cost = cost(&plan);
         let time = if let Some(time) = time(&plan) {
             let time_percent = (time / root.actual_total_time.unwrap() * 100.)
                 .round()
@@ -93,14 +98,13 @@ impl Node {
         };
 
         Self {
-            color,
             info,
             n_workers: plan.workers.len(),
-            percent,
             rows: plan.rows,
             time,
             total_cost: plan.total_cost,
             ty: plan.node.to_string(),
+            cost,
         }
     }
 }
@@ -116,6 +120,8 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
 
     fn node_label<'b>(&'b self, n: &Nd) -> dot::LabelText<'b> {
         let node = self.node(n).unwrap();
+        let percent = (node.cost / self.max_cost).min(0.99).max(0.1);
+        let color = color(percent);
 
         let mut label = format!(r#"<table border="0" cellborder="0" cellspacing="5">"#);
         label.push_str(&format!(
@@ -133,8 +139,8 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
             ));
         }
         label.push_str(&format!(
-            r#"<tr><td colspan="2" border="1" bgcolor="{};{:.2}:white">Score: {}</td></tr>"#,
-            node.color, node.percent, node.total_cost
+            r#"<tr><td colspan="2" border="1" bgcolor="{};{:.2}:white">Cost: {:.02}</td></tr>"#,
+            color, percent, node.cost
         ));
         label.push_str(&format!(
             r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#,
@@ -279,4 +285,14 @@ fn time(plan: &crate::Plan) -> Option<f32> {
     } else {
         None
     }
+}
+
+fn cost(plan: &crate::Plan) -> f32 {
+    let mut cost = plan.total_cost;
+
+    for child in &plan.plans {
+        cost -= child.total_cost;
+    }
+
+    cost
 }

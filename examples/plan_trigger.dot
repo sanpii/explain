@@ -1,5 +1,5 @@
 graph explain {
-    node0[label=<<table border="0" cellborder="0" cellspacing="5"><tr><td align="left"><b>ModifyTable</b></td><td>&lt; 1 ms | 99 %</td></tr><tr><td colspan="2" align="left"></td></tr><tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 0.01</td></tr><tr><td colspan="2" align="left">Rows: 1</td></tr></table>>][style="rounded"][shape="box"];
-    node1[label=<<table border="0" cellborder="0" cellspacing="5"><tr><td align="left"><b>Result</b></td><td>&lt; 1 ms | 1 %</td></tr><tr><td colspan="2" align="left"></td></tr><tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 0.01</td></tr><tr><td colspan="2" align="left">Rows: 1</td></tr></table>>][style="rounded"][shape="box"];
+    node0[label=<<table border="0" cellborder="0" cellspacing="5"><tr><td align="left"><b>ModifyTable</b></td><td>&lt; 1 ms | 99 %</td></tr><tr><td colspan="2" align="left"></td></tr><tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Cost: 0.00</td></tr><tr><td colspan="2" align="left">Rows: 1</td></tr></table>>][style="rounded"][shape="box"];
+    node1[label=<<table border="0" cellborder="0" cellspacing="5"><tr><td align="left"><b>Result</b></td><td>&lt; 1 ms | 1 %</td></tr><tr><td colspan="2" align="left"></td></tr><tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Cost: 0.01</td></tr><tr><td colspan="2" align="left">Rows: 1</td></tr></table>>][style="rounded"][shape="box"];
     node0 -- node1[label=""];
 }
