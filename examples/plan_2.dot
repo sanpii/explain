@@ -1,122 +1,64 @@
-
-graph "" {
-    node[shape=plain,style=rounded];
-
-    
-node0[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Sort</b></td><td>6.088 ms | 100 %</td></tr>
-        <tr><td colspan="2" align="left">by question_1.id</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 625.88</td></tr>
-        <tr><td colspan="2" align="left">Rows: 410</td></tr>
-    </table>
->
-];
-
-
-node1[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>5.576 ms | 92 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c1150a;0.97:white">Score: 607.06</td></tr>
-        <tr><td colspan="2" align="left">Rows: 410</td></tr>
-    </table>
->
-];
-
-
-node2[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 2.94</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node3[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on public.rel_users_exams(rel_users_exams)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.73</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node2 -- node3
-
-node4[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on public.exam(exam_1)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.19</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node2 -- node4
-node1 -- node2
-
-node5[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>5.42 ms | 89 %</td></tr>
-        <tr><td colspan="2" align="left">right join on (answer_1.question_id = question_1.id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c1190a;0.96:white">Score: 599</td></tr>
-        <tr><td colspan="2" align="left">Rows: 410</td></tr>
-    </table>
->
-];
-
-
-node6[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>1.962 ms | 32 %</td></tr>
-        <tr><td colspan="2" align="left">on public.answer(answer_1)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c0c10a;0.50:white">Score: 311.13</td></tr>
-        <tr><td colspan="2" align="left">Rows: 14713</td></tr>
-    </table>
->
-];
-
-node5 -- node6
-
-node7[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>1.025 ms | 17 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#8fc10a;0.36:white">Score: 227.66</td></tr>
-        <tr><td colspan="2" align="left">Rows: 75</td></tr>
-    </table>
->
-];
-
-
-node8[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 16 %</td></tr>
-        <tr><td colspan="2" align="left">on public.question(question_1)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#8fc10a;0.36:white">Score: 227.66</td></tr>
-        <tr><td colspan="2" align="left">Rows: 75</td></tr>
-    </table>
->
-];
-
-node7 -- node8
-node5 -- node7
-node1 -- node5
-node0 -- node1
-
+graph explain {
+    node0[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Sort</b></td><td>6.088 ms | 100 %</td></tr>
+    <tr><td colspan="2" align="left">by question_1.id</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 625.88</td></tr>
+    <tr><td colspan="2" align="left">Rows: 410</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node1[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>5.576 ms | 92 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c1150a;0.97:white">Score: 607.06</td></tr>
+    <tr><td colspan="2" align="left">Rows: 410</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node2[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 2.94</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node3[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on public.rel_users_exams(rel_users_exams)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.73</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node4[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on public.exam(exam_1)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.19</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node5[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>5.42 ms | 89 %</td></tr>
+    <tr><td colspan="2" align="left">right join on (answer_1.question_id = question_1.id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c1190a;0.96:white">Score: 599</td></tr>
+    <tr><td colspan="2" align="left">Rows: 410</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node6[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>1.962 ms | 32 %</td></tr>
+    <tr><td colspan="2" align="left">on public.answer(answer_1)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c0c10a;0.50:white">Score: 311.13</td></tr>
+    <tr><td colspan="2" align="left">Rows: 14713</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node7[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>1.025 ms | 17 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#8fc10a;0.36:white">Score: 227.66</td></tr>
+    <tr><td colspan="2" align="left">Rows: 75</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node8[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 16 %</td></tr>
+    <tr><td colspan="2" align="left">on public.question(question_1)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#8fc10a;0.36:white">Score: 227.66</td></tr>
+    <tr><td colspan="2" align="left">Rows: 75</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node0 -- node1[label=""];
+    node1 -- node2[label=""];
+    node2 -- node3[label=""];
+    node2 -- node4[label=""];
+    node1 -- node5[label=""];
+    node5 -- node6[label=""];
+    node5 -- node7[label=""];
+    node7 -- node8[label=""];
 }

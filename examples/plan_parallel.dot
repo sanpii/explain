@@ -1,57 +1,29 @@
-
-graph "" {
-    node[shape=plain,style=rounded];
-
-    
-node0[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>484.97 ms | 100 %</td></tr>
-        <tr><td colspan="2" align="left">by </td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 144975.02</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node1[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Gather</b></td><td>486.428 ms | 100 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 144974.98</td></tr>
-        <tr><td colspan="2" align="left">Rows: 4</td></tr>
-    </table>
->
-];
-
-
-node2[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>482.39 ms | 99 %</td></tr>
-        <tr><td colspan="2" align="left">by </td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 143974.58</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node3[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>344.447 ms | 71 %</td></tr>
-        <tr><td colspan="2" align="left">on public.lineitem(lineitem)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c1160a;0.97:white">Score: 140298.89</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1470273</td></tr>
-    </table>
->
-];
-
-node2 -- node3
-node1 -- node2
-node0 -- node1
-
+graph explain {
+    node0[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>484.97 ms | 100 %</td></tr>
+    <tr><td colspan="2" align="left">by </td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 144975.02</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node1[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Gather</b></td><td>486.428 ms | 100 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 144974.98</td></tr>
+    <tr><td colspan="2" align="left">Rows: 4</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node2[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>482.39 ms | 99 %</td></tr>
+    <tr><td colspan="2" align="left">by </td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 143974.58</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node3[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>344.447 ms | 71 %</td></tr>
+    <tr><td colspan="2" align="left">on public.lineitem(lineitem)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c1160a;0.97:white">Score: 140298.89</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1470273</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node0 -- node1[label=""];
+    node1 -- node2[label=""];
+    node2 -- node3[label=""];
 }

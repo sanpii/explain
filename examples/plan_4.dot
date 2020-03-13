@@ -1,642 +1,344 @@
-
-graph "" {
-    node[shape=plain,style=rounded];
-
-    
-node0[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Sort</b></td><td>13.793 ms | 100 %</td></tr>
-        <tr><td colspan="2" align="left">by sv.product_id</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 1470.87</td></tr>
-        <tr><td colspan="2" align="left">Rows: 4050</td></tr>
-    </table>
->
-];
-
-
-node1[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 5 %</td></tr>
-        <tr><td colspan="2" align="left">on public.spree_variants(spree_variants)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 80.47</td></tr>
-        <tr><td colspan="2" align="left">Rows: 352</td></tr>
-    </table>
->
-];
-
-node0 -- node1
-
-node2[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>3.98 ms | 29 %</td></tr>
-        <tr><td colspan="2" align="left">by sv_1.product_id</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#53c10a;0.20:white">Score: 292.38</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node3[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Sort</b></td><td>2.705 ms | 20 %</td></tr>
-        <tr><td colspan="2" align="left">by sv_1.product_id</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#52c10a;0.20:white">Score: 289.3</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node4[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>2.45 ms | 18 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sov_sv.option_value_id = sov.id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#50c10a;0.19:white">Score: 282.3</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node5[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>2.086 ms | 15 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4dc10a;0.18:white">Score: 270.98</td></tr>
-        <tr><td colspan="2" align="left">Rows: 528</td></tr>
-    </table>
->
-];
-
-
-node6[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 3 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sv_1.variant_id = catalog_variants.variant_id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 24.3</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node7[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 352</td></tr>
-    </table>
->
-];
-
-node6 -- node7
-
-node8[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 2 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
-        <tr><td colspan="2" align="left">Rows: 200</td></tr>
-    </table>
->
-];
-
-
-node9[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left">by catalog_variants.variant_id</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
-        <tr><td colspan="2" align="left">Rows: 200</td></tr>
-    </table>
->
-];
-
-
-node10[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 352</td></tr>
-    </table>
->
-];
-
-node9 -- node10
-node8 -- node9
-node6 -- node8
-node5 -- node6
-
-node11[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.37</td></tr>
-        <tr><td colspan="2" align="left">Rows: 3</td></tr>
-    </table>
->
-];
-
-node5 -- node11
-node4 -- node5
-
-node12[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 6.69</td></tr>
-        <tr><td colspan="2" align="left">Rows: 71</td></tr>
-    </table>
->
-];
-
-
-node13[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sov.option_type_id = sot.id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 6.69</td></tr>
-        <tr><td colspan="2" align="left">Rows: 71</td></tr>
-    </table>
->
-];
-
-
-node14[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on public.spree_option_values(sov)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 4.13</td></tr>
-        <tr><td colspan="2" align="left">Rows: 213</td></tr>
-    </table>
->
-];
-
-node13 -- node14
-
-node15[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node16[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on public.spree_option_types(sot)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node15 -- node16
-node13 -- node15
-node12 -- node13
-node4 -- node12
-node3 -- node4
-node2 -- node3
-node0 -- node2
-
-node17[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>1.844 ms | 13 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sov_sv_1.option_value_id = sov_1.id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#50c10a;0.19:white">Score: 282.3</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node18[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>1.555 ms | 11 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4dc10a;0.18:white">Score: 270.98</td></tr>
-        <tr><td colspan="2" align="left">Rows: 528</td></tr>
-    </table>
->
-];
-
-
-node19[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 3 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sv_2.variant_id = catalog_variants_1.variant_id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 24.3</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node20[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 352</td></tr>
-    </table>
->
-];
-
-node19 -- node20
-
-node21[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
-        <tr><td colspan="2" align="left">Rows: 200</td></tr>
-    </table>
->
-];
-
-
-node22[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left">by catalog_variants_1.variant_id</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
-        <tr><td colspan="2" align="left">Rows: 200</td></tr>
-    </table>
->
-];
-
-
-node23[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 352</td></tr>
-    </table>
->
-];
-
-node22 -- node23
-node21 -- node22
-node19 -- node21
-node18 -- node19
-
-node24[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.37</td></tr>
-        <tr><td colspan="2" align="left">Rows: 3</td></tr>
-    </table>
->
-];
-
-node18 -- node24
-node17 -- node18
-
-node25[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 6.69</td></tr>
-        <tr><td colspan="2" align="left">Rows: 71</td></tr>
-    </table>
->
-];
-
-
-node26[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sov_1.option_type_id = sot_1.id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 6.69</td></tr>
-        <tr><td colspan="2" align="left">Rows: 71</td></tr>
-    </table>
->
-];
-
-
-node27[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on public.spree_option_values(sov_1)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 4.13</td></tr>
-        <tr><td colspan="2" align="left">Rows: 213</td></tr>
-    </table>
->
-];
-
-node26 -- node27
-
-node28[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node29[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on public.spree_option_types(sot_1)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node28 -- node29
-node26 -- node28
-node25 -- node26
-node17 -- node25
-node0 -- node17
-
-node30[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>6.037 ms | 44 %</td></tr>
-        <tr><td colspan="2" align="left">by spree_prices.variant_id</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4ec10a;0.18:white">Score: 271.84</td></tr>
-        <tr><td colspan="2" align="left">Rows: 4621</td></tr>
-    </table>
->
-];
-
-
-node31[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>5.785 ms | 42 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (spree_prices.variant_id = catalog_variants_2.variant_id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#3cc10a;0.14:white">Score: 202.53</td></tr>
-        <tr><td colspan="2" align="left">Rows: 4621</td></tr>
-    </table>
->
-];
-
-
-node32[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>2.548 ms | 18 %</td></tr>
-        <tr><td colspan="2" align="left">on public.spree_prices(spree_prices)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#30c10a;0.10:white">Score: 153.42</td></tr>
-        <tr><td colspan="2" align="left">Rows: 9242</td></tr>
-    </table>
->
-];
-
-node31 -- node32
-
-node33[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>1.229 ms | 9 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
-        <tr><td colspan="2" align="left">Rows: 200</td></tr>
-    </table>
->
-];
-
-
-node34[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>1.14 ms | 8 %</td></tr>
-        <tr><td colspan="2" align="left">by catalog_variants_2.variant_id</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
-        <tr><td colspan="2" align="left">Rows: 200</td></tr>
-    </table>
->
-];
-
-
-node35[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 7 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 352</td></tr>
-    </table>
->
-];
-
-node34 -- node35
-node33 -- node34
-node31 -- node33
-node30 -- node31
-node0 -- node30
-
-node36[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>13.526 ms | 98 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (pr.variant_id = sv.variant_id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#52c10a;0.20:white">Score: 291.08</td></tr>
-        <tr><td colspan="2" align="left">Rows: 4050</td></tr>
-    </table>
->
-];
-
-
-node37[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>6.157 ms | 45 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 92.42</td></tr>
-        <tr><td colspan="2" align="left">Rows: 4621</td></tr>
-    </table>
->
-];
-
-node36 -- node37
-
-node38[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>7.189 ms | 52 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.52</td></tr>
-        <tr><td colspan="2" align="left">Rows: 175</td></tr>
-    </table>
->
-];
-
-
-node39[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>7.024 ms | 51 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sv.variant_id = vc.variant_id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.52</td></tr>
-        <tr><td colspan="2" align="left">Rows: 175</td></tr>
-    </table>
->
-];
-
-
-node40[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>4.846 ms | 35 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sv.product_id = sp.id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 32.31</td></tr>
-        <tr><td colspan="2" align="left">Rows: 199</td></tr>
-    </table>
->
-];
-
-
-node41[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 352</td></tr>
-    </table>
->
-];
-
-node40 -- node41
-
-node42[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>4.622 ms | 34 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 19.76</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node43[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>4.51 ms | 33 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (sp.id = pcc.product_id)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 19.76</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node44[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left">on public.spree_products(sp)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 11.11</td></tr>
-        <tr><td colspan="2" align="left">Rows: 311</td></tr>
-    </table>
->
-];
-
-node43 -- node44
-
-node45[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>4.228 ms | 31 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.52</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node46[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>4.136 ms | 30 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.52</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-node45 -- node46
-node43 -- node45
-node42 -- node43
-node40 -- node42
-node39 -- node40
-
-node47[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>2.018 ms | 15 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.52</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-
-node48[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>1.945 ms | 14 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.52</td></tr>
-        <tr><td colspan="2" align="left">Rows: 176</td></tr>
-    </table>
->
-];
-
-node47 -- node48
-node39 -- node47
-node38 -- node39
-node36 -- node38
-node0 -- node36
-
+graph explain {
+    node0[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Sort</b></td><td>13.793 ms | 100 %</td></tr>
+    <tr><td colspan="2" align="left">by sv.product_id</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 1470.87</td></tr>
+    <tr><td colspan="2" align="left">Rows: 4050</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node1[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 5 %</td></tr>
+    <tr><td colspan="2" align="left">on public.spree_variants(spree_variants)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 80.47</td></tr>
+    <tr><td colspan="2" align="left">Rows: 352</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node2[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>3.98 ms | 29 %</td></tr>
+    <tr><td colspan="2" align="left">by sv_1.product_id</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#53c10a;0.20:white">Score: 292.38</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node3[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Sort</b></td><td>2.705 ms | 20 %</td></tr>
+    <tr><td colspan="2" align="left">by sv_1.product_id</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#52c10a;0.20:white">Score: 289.3</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node4[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>2.45 ms | 18 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sov_sv.option_value_id = sov.id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#50c10a;0.19:white">Score: 282.3</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node5[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>2.086 ms | 15 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4dc10a;0.18:white">Score: 270.98</td></tr>
+    <tr><td colspan="2" align="left">Rows: 528</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node6[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 3 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sv_1.variant_id = catalog_variants.variant_id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 24.3</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node7[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 352</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node8[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 2 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
+    <tr><td colspan="2" align="left">Rows: 200</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node9[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left">by catalog_variants.variant_id</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
+    <tr><td colspan="2" align="left">Rows: 200</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node10[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 352</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node11[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.37</td></tr>
+    <tr><td colspan="2" align="left">Rows: 3</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node12[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 6.69</td></tr>
+    <tr><td colspan="2" align="left">Rows: 71</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node13[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sov.option_type_id = sot.id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 6.69</td></tr>
+    <tr><td colspan="2" align="left">Rows: 71</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node14[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on public.spree_option_values(sov)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 4.13</td></tr>
+    <tr><td colspan="2" align="left">Rows: 213</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node15[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node16[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on public.spree_option_types(sot)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node17[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>1.844 ms | 13 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sov_sv_1.option_value_id = sov_1.id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#50c10a;0.19:white">Score: 282.3</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node18[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>1.555 ms | 11 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4dc10a;0.18:white">Score: 270.98</td></tr>
+    <tr><td colspan="2" align="left">Rows: 528</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node19[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 3 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sv_2.variant_id = catalog_variants_1.variant_id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 24.3</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node20[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 352</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node21[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
+    <tr><td colspan="2" align="left">Rows: 200</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node22[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left">by catalog_variants_1.variant_id</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
+    <tr><td colspan="2" align="left">Rows: 200</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node23[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 352</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node24[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.37</td></tr>
+    <tr><td colspan="2" align="left">Rows: 3</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node25[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 6.69</td></tr>
+    <tr><td colspan="2" align="left">Rows: 71</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node26[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sov_1.option_type_id = sot_1.id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 6.69</td></tr>
+    <tr><td colspan="2" align="left">Rows: 71</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node27[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on public.spree_option_values(sov_1)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 4.13</td></tr>
+    <tr><td colspan="2" align="left">Rows: 213</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node28[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node29[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on public.spree_option_types(sot_1)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node30[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>6.037 ms | 44 %</td></tr>
+    <tr><td colspan="2" align="left">by spree_prices.variant_id</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4ec10a;0.18:white">Score: 271.84</td></tr>
+    <tr><td colspan="2" align="left">Rows: 4621</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node31[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>5.785 ms | 42 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (spree_prices.variant_id = catalog_variants_2.variant_id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#3cc10a;0.14:white">Score: 202.53</td></tr>
+    <tr><td colspan="2" align="left">Rows: 4621</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node32[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>2.548 ms | 18 %</td></tr>
+    <tr><td colspan="2" align="left">on public.spree_prices(spree_prices)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#30c10a;0.10:white">Score: 153.42</td></tr>
+    <tr><td colspan="2" align="left">Rows: 9242</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node33[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>1.229 ms | 9 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
+    <tr><td colspan="2" align="left">Rows: 200</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node34[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>1.14 ms | 8 %</td></tr>
+    <tr><td colspan="2" align="left">by catalog_variants_2.variant_id</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 9.92</td></tr>
+    <tr><td colspan="2" align="left">Rows: 200</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node35[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 7 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 352</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node36[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>13.526 ms | 98 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (pr.variant_id = sv.variant_id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#52c10a;0.20:white">Score: 291.08</td></tr>
+    <tr><td colspan="2" align="left">Rows: 4050</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node37[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>6.157 ms | 45 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 92.42</td></tr>
+    <tr><td colspan="2" align="left">Rows: 4621</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node38[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>7.189 ms | 52 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.52</td></tr>
+    <tr><td colspan="2" align="left">Rows: 175</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node39[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>7.024 ms | 51 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sv.variant_id = vc.variant_id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.52</td></tr>
+    <tr><td colspan="2" align="left">Rows: 175</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node40[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>4.846 ms | 35 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sv.product_id = sp.id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 32.31</td></tr>
+    <tr><td colspan="2" align="left">Rows: 199</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node41[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 7.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 352</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node42[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>4.622 ms | 34 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 19.76</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node43[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>4.51 ms | 33 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (sp.id = pcc.product_id)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 19.76</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node44[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left">on public.spree_products(sp)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 11.11</td></tr>
+    <tr><td colspan="2" align="left">Rows: 311</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node45[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>4.228 ms | 31 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.52</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node46[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>4.136 ms | 30 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.52</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node47[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>2.018 ms | 15 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.52</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node48[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>1.945 ms | 14 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.52</td></tr>
+    <tr><td colspan="2" align="left">Rows: 176</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node0 -- node1[label=""];
+    node0 -- node2[label=""];
+    node2 -- node3[label=""];
+    node3 -- node4[label=""];
+    node4 -- node5[label=""];
+    node5 -- node6[label=""];
+    node6 -- node7[label=""];
+    node6 -- node8[label=""];
+    node8 -- node9[label=""];
+    node9 -- node10[label=""];
+    node5 -- node11[label=""];
+    node4 -- node12[label=""];
+    node12 -- node13[label=""];
+    node13 -- node14[label=""];
+    node13 -- node15[label=""];
+    node15 -- node16[label=""];
+    node0 -- node17[label=""];
+    node17 -- node18[label=""];
+    node18 -- node19[label=""];
+    node19 -- node20[label=""];
+    node19 -- node21[label=""];
+    node21 -- node22[label=""];
+    node22 -- node23[label=""];
+    node18 -- node24[label=""];
+    node17 -- node25[label=""];
+    node25 -- node26[label=""];
+    node26 -- node27[label=""];
+    node26 -- node28[label=""];
+    node28 -- node29[label=""];
+    node0 -- node30[label=""];
+    node30 -- node31[label=""];
+    node31 -- node32[label=""];
+    node31 -- node33[label=""];
+    node33 -- node34[label=""];
+    node34 -- node35[label=""];
+    node0 -- node36[label=""];
+    node36 -- node37[label=""];
+    node36 -- node38[label=""];
+    node38 -- node39[label=""];
+    node39 -- node40[label=""];
+    node40 -- node41[label=""];
+    node40 -- node42[label=""];
+    node42 -- node43[label=""];
+    node43 -- node44[label=""];
+    node43 -- node45[label=""];
+    node45 -- node46[label=""];
+    node39 -- node47[label=""];
+    node47 -- node48[label=""];
 }

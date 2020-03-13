@@ -1,941 +1,505 @@
-
-graph "" {
-    node[shape=plain,style=rounded];
-
-    
-node0[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>232.217 ms | 100 %</td></tr>
-        <tr><td colspan="2" align="left">left join on ((n.nspname = q.nspname) AND (c.relname = q.tblname))</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 417.11</td></tr>
-        <tr><td colspan="2" align="left">Rows: 12</td></tr>
-    </table>
->
-];
-
-
-node1[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>41.452 ms | 18 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (c.relname = s.tblname)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c1b00a;0.55:white">Score: 228.59</td></tr>
-        <tr><td colspan="2" align="left">Rows: 12</td></tr>
-    </table>
->
-];
-
-
-node2[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>6.325 ms | 3 %</td></tr>
-        <tr><td colspan="2" align="left">left join on (c.relname = c_1.relname)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#3ec10a;0.14:white">Score: 59.55</td></tr>
-        <tr><td colspan="2" align="left">Rows: 12</td></tr>
-    </table>
->
-];
-
-
-node3[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>5.685 ms | 2 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (c.relnamespace = n.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 17.77</td></tr>
-        <tr><td colspan="2" align="left">Rows: 12</td></tr>
-    </table>
->
-];
-
-
-node4[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_class(c)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 69</td></tr>
-    </table>
->
-];
-
-node3 -- node4
-
-node5[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node6[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(n)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node5 -- node6
-node3 -- node5
-node2 -- node3
-
-node7[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 41.44</td></tr>
-        <tr><td colspan="2" align="left">Rows: 14</td></tr>
-    </table>
->
-];
-
-
-node8[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">by c_1.relname</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 41.3</td></tr>
-        <tr><td colspan="2" align="left">Rows: 14</td></tr>
-    </table>
->
-];
-
-
-node9[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Sort</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">by c_1.relname</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 41.09</td></tr>
-        <tr><td colspan="2" align="left">Rows: 14</td></tr>
-    </table>
->
-];
-
-
-node10[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (i.oid = x.indexrelid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.79</td></tr>
-        <tr><td colspan="2" align="left">Rows: 14</td></tr>
-    </table>
->
-];
-
-
-node11[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_class(i)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 135</td></tr>
-    </table>
->
-];
-
-node10 -- node11
-
-node12[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 23.42</td></tr>
-        <tr><td colspan="2" align="left">Rows: 36</td></tr>
-    </table>
->
-];
-
-
-node13[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (x.indrelid = c_1.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 23.42</td></tr>
-        <tr><td colspan="2" align="left">Rows: 36</td></tr>
-    </table>
->
-];
-
-
-node14[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_index(x)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 5.8</td></tr>
-        <tr><td colspan="2" align="left">Rows: 180</td></tr>
-    </table>
->
-];
-
-node13 -- node14
-
-node15[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 69</td></tr>
-    </table>
->
-];
-
-
-node16[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_class(c_1)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 69</td></tr>
-    </table>
->
-];
-
-node15 -- node16
-node13 -- node15
-node12 -- node13
-node10 -- node12
-node9 -- node10
-node8 -- node9
-node7 -- node8
-node2 -- node7
-node1 -- node2
-
-node17[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>34.99 ms | 15 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#9ec10a;0.40:white">Score: 168.03</td></tr>
-        <tr><td colspan="2" align="left">Rows: 68</td></tr>
-    </table>
->
-];
-
-
-node18[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Subquery Scan</b></td><td>34.907 ms | 15 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#9ec10a;0.40:white">Score: 168.03</td></tr>
-        <tr><td colspan="2" align="left">Rows: 68</td></tr>
-    </table>
->
-];
-
-
-node19[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>34.86 ms | 15 %</td></tr>
-        <tr><td colspan="2" align="left">by ns.nspname, tbl.relname, tbl.oid, tbl.reltuples, tbl.relpages, (COALESCE(toast.relpages, 0)), (COALESCE(toast.reltuples, '0'::real)), (COALESCE((("substring"(array_to_string(tbl.reloptions, ' '::text), 'fillfactor=([0-9]+)'::text))::smallint)::integer, 100)), ((current_setting('block_size'::text))::numeric), (CASE WHEN ((version() ~ 'mingw32'::text) OR (version() ~ '64-bit|x86_64|ppc64|ia64|amd64'::text)) THEN 8 ELSE 4 END), tbl.relhasoids</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#9dc10a;0.40:white">Score: 167.35</td></tr>
-        <tr><td colspan="2" align="left">Rows: 68</td></tr>
-    </table>
->
-];
-
-
-node20[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Sort</b></td><td>34.371 ms | 15 %</td></tr>
-        <tr><td colspan="2" align="left">by tbl.relname, tbl.oid, tbl.reltuples, tbl.relpages, (COALESCE(toast.relpages, 0)), (COALESCE(toast.reltuples, '0'::real)), (COALESCE((("substring"(array_to_string(tbl.reloptions, ' '::text), 'fillfactor=([0-9]+)'::text))::smallint)::integer, 100)), tbl.relhasoids</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#97c10a;0.39:white">Score: 160.89</td></tr>
-        <tr><td colspan="2" align="left">Rows: 68</td></tr>
-    </table>
->
-];
-
-
-node21[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>33.21 ms | 14 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#95c10a;0.38:white">Score: 158.65</td></tr>
-        <tr><td colspan="2" align="left">Rows: 68</td></tr>
-    </table>
->
-];
-
-
-node22[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>1.493 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4dc10a;0.18:white">Score: 76.04</td></tr>
-        <tr><td colspan="2" align="left">Rows: 68</td></tr>
-    </table>
->
-];
-
-
-node23[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 32.29</td></tr>
-        <tr><td colspan="2" align="left">Rows: 12</td></tr>
-    </table>
->
-];
-
-
-node24[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (tbl.relnamespace = ns.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 17.68</td></tr>
-        <tr><td colspan="2" align="left">Rows: 12</td></tr>
-    </table>
->
-];
-
-
-node25[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_class(tbl)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 69</td></tr>
-    </table>
->
-];
-
-node24 -- node25
-
-node26[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node27[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(ns)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node26 -- node27
-node24 -- node26
-node23 -- node24
-
-node28[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.22</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node23 -- node28
-node22 -- node23
-
-node29[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.59</td></tr>
-        <tr><td colspan="2" align="left">Rows: 6</td></tr>
-    </table>
->
-];
-
-node22 -- node29
-node21 -- node22
-
-node30[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Materialize</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4fc10a;0.19:white">Score: 79.21</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node31[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Subquery Scan</b></td><td>4.067 ms | 2 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4fc10a;0.19:white">Score: 79.2</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node32[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>4.022 ms | 2 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4fc10a;0.19:white">Score: 79.19</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node33[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (s_2.starelid = c_2.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.66</td></tr>
-        <tr><td colspan="2" align="left">Rows: 33</td></tr>
-    </table>
->
-];
-
-
-node34[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_statistic(s_2)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 19.98</td></tr>
-        <tr><td colspan="2" align="left">Rows: 199</td></tr>
-    </table>
->
-];
-
-node33 -- node34
-
-node35[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 18.89</td></tr>
-        <tr><td colspan="2" align="left">Rows: 57</td></tr>
-    </table>
->
-];
-
-
-node36[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (c_2.relnamespace = n_1.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 18.89</td></tr>
-        <tr><td colspan="2" align="left">Rows: 57</td></tr>
-    </table>
->
-];
-
-
-node37[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_class(c_2)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 342</td></tr>
-    </table>
->
-];
-
-node36 -- node37
-
-node38[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node39[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(n_1)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node38 -- node39
-node36 -- node38
-node35 -- node36
-node33 -- node35
-node32 -- node33
-
-node40[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.13</td></tr>
-        <tr><td colspan="2" align="left">Rows: 3</td></tr>
-    </table>
->
-];
-
-node32 -- node40
-node31 -- node32
-node30 -- node31
-node21 -- node30
-node20 -- node21
-node19 -- node20
-node18 -- node19
-node17 -- node18
-node1 -- node17
-node0 -- node1
-
-node41[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>190.33 ms | 82 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#abc10a;0.44:white">Score: 183.33</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node42[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>190.312 ms | 82 %</td></tr>
-        <tr><td colspan="2" align="left">by q.nspname, q.tblname</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#abc10a;0.44:white">Score: 183.32</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node43[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>190.29 ms | 82 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#abc10a;0.44:white">Score: 183.3</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node44[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Aggregate</b></td><td>190.143 ms | 82 %</td></tr>
-        <tr><td colspan="2" align="left">by q.nspname, q.tblname, q.idxname, q.reltuples, q.relpages, q.relam, q.attrelid, ((current_setting('block_size'::text))::numeric), q.fillfactor</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#aac10a;0.44:white">Score: 182.02</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node45[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Sort</b></td><td>189.926 ms | 82 %</td></tr>
-        <tr><td colspan="2" align="left">by q.tblname, q.idxname, q.reltuples, q.relpages, q.relam, q.attrelid, q.fillfactor</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#aac10a;0.44:white">Score: 181.95</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node46[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>189.594 ms | 82 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#aac10a;0.44:white">Score: 181.94</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node47[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>188.458 ms | 81 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#a6c10a;0.43:white">Score: 177.74</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node48[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>CteScan</b></td><td>4.145 ms | 2 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4dc10a;0.18:white">Score: 76.03</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node49[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>2.855 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#4bc10a;0.18:white">Score: 73.76</td></tr>
-        <tr><td colspan="2" align="left">Rows: 101</td></tr>
-    </table>
->
-];
-
-
-node50[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>1.613 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (idx.relnamespace = pg_namespace.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2fc10a;0.10:white">Score: 42.13</td></tr>
-        <tr><td colspan="2" align="left">Rows: 17</td></tr>
-    </table>
->
-];
-
-
-node51[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>1.282 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (idx.oid = pg_index.indexrelid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.92</td></tr>
-        <tr><td colspan="2" align="left">Rows: 17</td></tr>
-    </table>
->
-];
-
-
-node52[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_class(idx)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 161</td></tr>
-    </table>
->
-];
-
-node51 -- node52
-
-node53[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 23.42</td></tr>
-        <tr><td colspan="2" align="left">Rows: 36</td></tr>
-    </table>
->
-];
-
-
-node54[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (pg_index.indrelid = tbl_1.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 23.42</td></tr>
-        <tr><td colspan="2" align="left">Rows: 36</td></tr>
-    </table>
->
-];
-
-
-node55[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_index(pg_index)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 5.8</td></tr>
-        <tr><td colspan="2" align="left">Rows: 180</td></tr>
-    </table>
->
-];
-
-node54 -- node55
-
-node56[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 69</td></tr>
-    </table>
->
-];
-
-
-node57[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_class(tbl_1)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 69</td></tr>
-    </table>
->
-];
-
-node56 -- node57
-node54 -- node56
-node53 -- node54
-node51 -- node53
-node50 -- node51
-
-node58[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.06</td></tr>
-        <tr><td colspan="2" align="left">Rows: 6</td></tr>
-    </table>
->
-];
-
-
-node59[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(pg_namespace)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.06</td></tr>
-        <tr><td colspan="2" align="left">Rows: 6</td></tr>
-    </table>
->
-];
-
-node58 -- node59
-node50 -- node58
-node49 -- node50
-
-node60[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.71</td></tr>
-        <tr><td colspan="2" align="left">Rows: 6</td></tr>
-    </table>
->
-];
-
-node49 -- node60
-node48 -- node49
-node47 -- node48
-
-node61[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Nested Loop</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#63c10a;0.24:white">Score: 101.67</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node62[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (s_3.starelid = c_3.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 41.74</td></tr>
-        <tr><td colspan="2" align="left">Rows: 66</td></tr>
-    </table>
->
-];
-
-
-node63[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_statistic(s_3)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 19.98</td></tr>
-        <tr><td colspan="2" align="left">Rows: 398</td></tr>
-    </table>
->
-];
-
-node62 -- node63
-
-node64[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 18.89</td></tr>
-        <tr><td colspan="2" align="left">Rows: 57</td></tr>
-    </table>
->
-];
-
-
-node65[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">inner join on (c_3.relnamespace = n_2.oid)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 18.89</td></tr>
-        <tr><td colspan="2" align="left">Rows: 57</td></tr>
-    </table>
->
-];
-
-
-node66[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_class(c_3)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
-        <tr><td colspan="2" align="left">Rows: 342</td></tr>
-    </table>
->
-];
-
-node65 -- node66
-
-node67[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node68[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(n_2)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node67 -- node68
-node65 -- node67
-node64 -- node65
-node62 -- node64
-node61 -- node62
-
-node69[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 0.89</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node61 -- node69
-node47 -- node61
-node46 -- node47
-
-node70[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Index Only Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 4.17</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node46 -- node70
-node45 -- node46
-node44 -- node45
-node43 -- node44
-
-node71[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
-        <tr><td colspan="2" align="left">on pg_catalog.pg_am(am)</td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node43 -- node71
-node42 -- node43
-node41 -- node42
-node0 -- node41
-
+graph explain {
+    node0[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>232.217 ms | 100 %</td></tr>
+    <tr><td colspan="2" align="left">left join on ((n.nspname = q.nspname) AND (c.relname = q.tblname))</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 417.11</td></tr>
+    <tr><td colspan="2" align="left">Rows: 12</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node1[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>41.452 ms | 18 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (c.relname = s.tblname)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c1b00a;0.55:white">Score: 228.59</td></tr>
+    <tr><td colspan="2" align="left">Rows: 12</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node2[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>6.325 ms | 3 %</td></tr>
+    <tr><td colspan="2" align="left">left join on (c.relname = c_1.relname)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#3ec10a;0.14:white">Score: 59.55</td></tr>
+    <tr><td colspan="2" align="left">Rows: 12</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node3[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>5.685 ms | 2 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (c.relnamespace = n.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 17.77</td></tr>
+    <tr><td colspan="2" align="left">Rows: 12</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node4[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_class(c)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 69</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node5[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node6[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(n)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node7[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 41.44</td></tr>
+    <tr><td colspan="2" align="left">Rows: 14</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node8[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">by c_1.relname</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 41.3</td></tr>
+    <tr><td colspan="2" align="left">Rows: 14</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node9[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Sort</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">by c_1.relname</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 41.09</td></tr>
+    <tr><td colspan="2" align="left">Rows: 14</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node10[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (i.oid = x.indexrelid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.79</td></tr>
+    <tr><td colspan="2" align="left">Rows: 14</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node11[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_class(i)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 135</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node12[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 23.42</td></tr>
+    <tr><td colspan="2" align="left">Rows: 36</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node13[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (x.indrelid = c_1.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 23.42</td></tr>
+    <tr><td colspan="2" align="left">Rows: 36</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node14[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_index(x)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 5.8</td></tr>
+    <tr><td colspan="2" align="left">Rows: 180</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node15[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 69</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node16[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_class(c_1)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 69</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node17[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>34.99 ms | 15 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#9ec10a;0.40:white">Score: 168.03</td></tr>
+    <tr><td colspan="2" align="left">Rows: 68</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node18[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Subquery Scan</b></td><td>34.907 ms | 15 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#9ec10a;0.40:white">Score: 168.03</td></tr>
+    <tr><td colspan="2" align="left">Rows: 68</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node19[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>34.86 ms | 15 %</td></tr>
+    <tr><td colspan="2" align="left">by ns.nspname, tbl.relname, tbl.oid, tbl.reltuples, tbl.relpages, (COALESCE(toast.relpages, 0)), (COALESCE(toast.reltuples, '0'::real)), (COALESCE((("substring"(array_to_string(tbl.reloptions, ' '::text), 'fillfactor=([0-9]+)'::text))::smallint)::integer, 100)), ((current_setting('block_size'::text))::numeric), (CASE WHEN ((version() ~ 'mingw32'::text) OR (version() ~ '64-bit|x86_64|ppc64|ia64|amd64'::text)) THEN 8 ELSE 4 END), tbl.relhasoids</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#9dc10a;0.40:white">Score: 167.35</td></tr>
+    <tr><td colspan="2" align="left">Rows: 68</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node20[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Sort</b></td><td>34.371 ms | 15 %</td></tr>
+    <tr><td colspan="2" align="left">by tbl.relname, tbl.oid, tbl.reltuples, tbl.relpages, (COALESCE(toast.relpages, 0)), (COALESCE(toast.reltuples, '0'::real)), (COALESCE((("substring"(array_to_string(tbl.reloptions, ' '::text), 'fillfactor=([0-9]+)'::text))::smallint)::integer, 100)), tbl.relhasoids</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#97c10a;0.39:white">Score: 160.89</td></tr>
+    <tr><td colspan="2" align="left">Rows: 68</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node21[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>33.21 ms | 14 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#95c10a;0.38:white">Score: 158.65</td></tr>
+    <tr><td colspan="2" align="left">Rows: 68</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node22[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>1.493 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4dc10a;0.18:white">Score: 76.04</td></tr>
+    <tr><td colspan="2" align="left">Rows: 68</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node23[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 32.29</td></tr>
+    <tr><td colspan="2" align="left">Rows: 12</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node24[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (tbl.relnamespace = ns.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 17.68</td></tr>
+    <tr><td colspan="2" align="left">Rows: 12</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node25[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_class(tbl)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 69</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node26[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node27[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(ns)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node28[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.22</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node29[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 3.59</td></tr>
+    <tr><td colspan="2" align="left">Rows: 6</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node30[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Materialize</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4fc10a;0.19:white">Score: 79.21</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node31[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Subquery Scan</b></td><td>4.067 ms | 2 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4fc10a;0.19:white">Score: 79.2</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node32[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>4.022 ms | 2 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4fc10a;0.19:white">Score: 79.19</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node33[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (s_2.starelid = c_2.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.66</td></tr>
+    <tr><td colspan="2" align="left">Rows: 33</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node34[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_statistic(s_2)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 19.98</td></tr>
+    <tr><td colspan="2" align="left">Rows: 199</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node35[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 18.89</td></tr>
+    <tr><td colspan="2" align="left">Rows: 57</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node36[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (c_2.relnamespace = n_1.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 18.89</td></tr>
+    <tr><td colspan="2" align="left">Rows: 57</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node37[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_class(c_2)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 342</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node38[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node39[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(n_1)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node40[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.13</td></tr>
+    <tr><td colspan="2" align="left">Rows: 3</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node41[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>190.33 ms | 82 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#abc10a;0.44:white">Score: 183.33</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node42[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>190.312 ms | 82 %</td></tr>
+    <tr><td colspan="2" align="left">by q.nspname, q.tblname</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#abc10a;0.44:white">Score: 183.32</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node43[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>190.29 ms | 82 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#abc10a;0.44:white">Score: 183.3</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node44[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Aggregate</b></td><td>190.143 ms | 82 %</td></tr>
+    <tr><td colspan="2" align="left">by q.nspname, q.tblname, q.idxname, q.reltuples, q.relpages, q.relam, q.attrelid, ((current_setting('block_size'::text))::numeric), q.fillfactor</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#aac10a;0.44:white">Score: 182.02</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node45[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Sort</b></td><td>189.926 ms | 82 %</td></tr>
+    <tr><td colspan="2" align="left">by q.tblname, q.idxname, q.reltuples, q.relpages, q.relam, q.attrelid, q.fillfactor</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#aac10a;0.44:white">Score: 181.95</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node46[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>189.594 ms | 82 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#aac10a;0.44:white">Score: 181.94</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node47[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>188.458 ms | 81 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#a6c10a;0.43:white">Score: 177.74</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node48[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>CteScan</b></td><td>4.145 ms | 2 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4dc10a;0.18:white">Score: 76.03</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node49[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>2.855 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#4bc10a;0.18:white">Score: 73.76</td></tr>
+    <tr><td colspan="2" align="left">Rows: 101</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node50[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>1.613 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (idx.relnamespace = pg_namespace.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2fc10a;0.10:white">Score: 42.13</td></tr>
+    <tr><td colspan="2" align="left">Rows: 17</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node51[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>1.282 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (idx.oid = pg_index.indexrelid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 40.92</td></tr>
+    <tr><td colspan="2" align="left">Rows: 17</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node52[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_class(idx)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 161</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node53[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 23.42</td></tr>
+    <tr><td colspan="2" align="left">Rows: 36</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node54[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (pg_index.indrelid = tbl_1.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 23.42</td></tr>
+    <tr><td colspan="2" align="left">Rows: 36</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node55[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_index(pg_index)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 5.8</td></tr>
+    <tr><td colspan="2" align="left">Rows: 180</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node56[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 69</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node57[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_class(tbl_1)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 69</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node58[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.06</td></tr>
+    <tr><td colspan="2" align="left">Rows: 6</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node59[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(pg_namespace)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.06</td></tr>
+    <tr><td colspan="2" align="left">Rows: 6</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node60[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.71</td></tr>
+    <tr><td colspan="2" align="left">Rows: 6</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node61[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Nested Loop</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#63c10a;0.24:white">Score: 101.67</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node62[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (s_3.starelid = c_3.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 41.74</td></tr>
+    <tr><td colspan="2" align="left">Rows: 66</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node63[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_statistic(s_3)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 19.98</td></tr>
+    <tr><td colspan="2" align="left">Rows: 398</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node64[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 18.89</td></tr>
+    <tr><td colspan="2" align="left">Rows: 57</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node65[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">inner join on (c_3.relnamespace = n_2.oid)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 18.89</td></tr>
+    <tr><td colspan="2" align="left">Rows: 57</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node66[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_class(c_3)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 16.27</td></tr>
+    <tr><td colspan="2" align="left">Rows: 342</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node67[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Hash</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node68[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_namespace(n_2)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node69[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Index Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 0.89</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node70[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Index Only Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 4.17</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node71[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Seq Scan</b></td><td>&lt; 1 ms | 0 %</td></tr>
+    <tr><td colspan="2" align="left">on pg_catalog.pg_am(am)</td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#2ec10a;0.10:white">Score: 1.07</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node0 -- node1[label=""];
+    node1 -- node2[label=""];
+    node2 -- node3[label=""];
+    node3 -- node4[label=""];
+    node3 -- node5[label=""];
+    node5 -- node6[label=""];
+    node2 -- node7[label=""];
+    node7 -- node8[label=""];
+    node8 -- node9[label=""];
+    node9 -- node10[label=""];
+    node10 -- node11[label=""];
+    node10 -- node12[label=""];
+    node12 -- node13[label=""];
+    node13 -- node14[label=""];
+    node13 -- node15[label=""];
+    node15 -- node16[label=""];
+    node1 -- node17[label=""];
+    node17 -- node18[label=""];
+    node18 -- node19[label=""];
+    node19 -- node20[label=""];
+    node20 -- node21[label=""];
+    node21 -- node22[label=""];
+    node22 -- node23[label=""];
+    node23 -- node24[label=""];
+    node24 -- node25[label=""];
+    node24 -- node26[label=""];
+    node26 -- node27[label=""];
+    node23 -- node28[label=""];
+    node22 -- node29[label=""];
+    node21 -- node30[label=""];
+    node30 -- node31[label=""];
+    node31 -- node32[label=""];
+    node32 -- node33[label=""];
+    node33 -- node34[label=""];
+    node33 -- node35[label=""];
+    node35 -- node36[label=""];
+    node36 -- node37[label=""];
+    node36 -- node38[label=""];
+    node38 -- node39[label=""];
+    node32 -- node40[label=""];
+    node0 -- node41[label=""];
+    node41 -- node42[label=""];
+    node42 -- node43[label=""];
+    node43 -- node44[label=""];
+    node44 -- node45[label=""];
+    node45 -- node46[label=""];
+    node46 -- node47[label=""];
+    node47 -- node48[label=""];
+    node48 -- node49[label=""];
+    node49 -- node50[label=""];
+    node50 -- node51[label=""];
+    node51 -- node52[label=""];
+    node51 -- node53[label=""];
+    node53 -- node54[label=""];
+    node54 -- node55[label=""];
+    node54 -- node56[label=""];
+    node56 -- node57[label=""];
+    node50 -- node58[label=""];
+    node58 -- node59[label=""];
+    node49 -- node60[label=""];
+    node47 -- node61[label=""];
+    node61 -- node62[label=""];
+    node62 -- node63[label=""];
+    node62 -- node64[label=""];
+    node64 -- node65[label=""];
+    node65 -- node66[label=""];
+    node65 -- node67[label=""];
+    node67 -- node68[label=""];
+    node61 -- node69[label=""];
+    node46 -- node70[label=""];
+    node43 -- node71[label=""];
 }

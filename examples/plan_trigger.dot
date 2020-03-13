@@ -1,31 +1,15 @@
-
-graph "" {
-    node[shape=plain,style=rounded];
-
-    
-node0[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>ModifyTable</b></td><td>&lt; 1 ms | 100 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 0.01</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-
-node1[
-    label=<
-    <table cellborder="0" cellspacing="5">
-        <tr><td align="left"><b>Result</b></td><td>&lt; 1 ms | 1 %</td></tr>
-        <tr><td colspan="2" align="left"></td></tr>
-        <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 0.01</td></tr>
-        <tr><td colspan="2" align="left">Rows: 1</td></tr>
-    </table>
->
-];
-
-node0 -- node1
-
+graph explain {
+    node0[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>ModifyTable</b></td><td>&lt; 1 ms | 100 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 0.01</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node1[label=<<table cellborder="0" cellspacing="5">
+    <tr><td align="left"><b>Result</b></td><td>&lt; 1 ms | 1 %</td></tr>
+    <tr><td colspan="2" align="left"></td></tr>
+    <tr><td colspan="2" border="1" bgcolor="#c10d0a;0.99:white">Score: 0.01</td></tr>
+    <tr><td colspan="2" align="left">Rows: 1</td></tr>
+</table>>][style="rounded"][shape="plain"];
+    node0 -- node1[label=""];
 }

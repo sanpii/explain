@@ -1,8 +1,8 @@
 #![warn(rust_2018_idioms)]
 
-mod draw;
 mod errors;
 mod explain;
+mod graph;
 
 use errors::*;
 use explain::*;
@@ -62,7 +62,7 @@ fn main() -> Result<()> {
     };
 
     let explains: Vec<Explain> = serde_json::from_value(json)?;
-    let graph = draw::graph(&explains[0]);
+    let graph = graph::dot(&explains[0]);
 
     if let Some(output) = opt.output {
         use std::io::Write;
