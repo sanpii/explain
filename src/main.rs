@@ -24,6 +24,8 @@ struct Opt {
     file: Option<String>,
     #[structopt(short, long)]
     host: Option<String>,
+    #[structopt(short, long)]
+    output: Option<String>,
     #[structopt(short = "U", long)]
     user: Option<String>,
 }
@@ -62,7 +64,14 @@ fn main() -> Result<()> {
     let explains: Vec<Explain> = serde_json::from_value(json)?;
     let graph = draw::graph(&explains[0]);
 
-    println!("{}", graph);
+    if let Some(output) = opt.output {
+        use std::io::Write;
+
+        let mut output = std::fs::File::create(output)?;
+        output.write_all(graph.as_bytes())?;
+    } else {
+        println!("{}", graph);
+    }
 
     Ok(())
 }
