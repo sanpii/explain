@@ -26,6 +26,8 @@ struct Opt {
     host: Option<String>,
     #[structopt(short, long)]
     output: Option<String>,
+    #[structopt(short, long)]
+    port: Option<String>,
     #[structopt(short = "U", long)]
     user: Option<String>,
 }
@@ -86,7 +88,11 @@ fn dsn(opt: &Opt) -> String {
         .clone()
         .unwrap_or_else(|| std::env::var("USER").unwrap());
 
-    let dsn = format!("host={} user={} dbname={}", host, user, opt.dbname);
+    let mut dsn = format!("host={} user={} dbname={}", host, user, opt.dbname);
+
+    if let Some(port) = &opt.port {
+        dsn.push_str(&format!(" port={}", port));
+    }
 
     dsn
 }
