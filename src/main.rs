@@ -26,6 +26,8 @@ struct Opt {
     host: Option<String>,
     #[structopt(short, long)]
     output: Option<String>,
+    #[structopt(short = "W", long)]
+    password: bool,
     #[structopt(short, long)]
     port: Option<String>,
     #[structopt(short = "U", long)]
@@ -57,7 +59,7 @@ fn main() -> Result<()> {
             analyse, query
         );
 
-        let mut client = postgres::Client::connect(&dsn(&opt), postgres::NoTls)?;
+        let mut client = try_connect(&dsn(&opt), opt.password)?;
 
         let results = client.query_one(explain_query.as_str(), &[])?;
         results.get("QUERY PLAN")
@@ -76,6 +78,36 @@ fn main() -> Result<()> {
     }
 
     Ok(())
+}
+
+fn try_connect(dsn: &str, retry: bool) -> Result<postgres::Client> {
+    match connect(&dsn, false) {
+        Ok(client) => Ok(client),
+        Err(err) => {
+            if retry && &format!("{}", err) == "invalid configuration: password missing" {
+                Ok(connect(dsn, true)?)
+            } else {
+                Err(err.into())
+            }
+        }
+    }
+}
+
+fn connect(
+    dsn: &str,
+    ask_password: bool,
+) -> std::result::Result<postgres::Client, postgres::Error> {
+    let dsn = if ask_password {
+        let password = rpassword::prompt_password_stdout("Password: ").unwrap();
+
+        format!("{} password={}", dsn, password.trim_matches('\n'))
+    } else {
+        dsn.to_string()
+    };
+
+    let client = postgres::Client::connect(&dsn, postgres::NoTls)?;
+
+    Ok(client)
 }
 
 fn dsn(opt: &Opt) -> String {
