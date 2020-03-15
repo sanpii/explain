@@ -16,7 +16,7 @@ struct Opt {
     analyse: bool,
     #[structopt(short, long)]
     command: Option<String>,
-    dbname: String,
+    dbname: Option<String>,
     /// Don’t execute the query, the input is already an explain plan in JSON
     #[structopt(short = "n", long)]
     dry_run: bool,
@@ -114,15 +114,27 @@ fn dsn(opt: &Opt) -> String {
     let host = opt
         .host
         .clone()
+        .or_else(|| std::env::var("PGHOST").ok())
         .unwrap_or_else(|| "/run/postgresql".to_string());
     let user = opt
         .user
         .clone()
+        .or_else(|| std::env::var("PGUSER").ok())
         .unwrap_or_else(|| std::env::var("USER").unwrap());
+    let dbname = opt
+        .dbname
+        .clone()
+        .or_else(|| std::env::var("PGDATABASE").ok())
+        .unwrap_or_else(|| user.clone());
 
-    let mut dsn = format!("host={} user={} dbname={}", host, user, opt.dbname);
+    let mut dsn = format!("host={} user={} dbname={}", host, user, dbname);
 
-    if let Some(port) = &opt.port {
+    let port = opt
+        .port
+        .clone()
+        .or_else(|| std::env::var("PGPORT").ok());
+
+    if let Some(port) = port {
         dsn.push_str(&format!(" port={}", port));
     }
 
