@@ -59,7 +59,7 @@ fn main() -> Result<()> {
             analyse, query
         );
 
-        let mut client = try_connect(&dsn(&opt), opt.password)?;
+        let mut client = try_connect(&mut config(&opt)?, opt.password)?;
 
         let results = client.query_one(explain_query.as_str(), &[])?;
         results.get("QUERY PLAN")
@@ -80,12 +80,12 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn try_connect(dsn: &str, retry: bool) -> Result<postgres::Client> {
-    match connect(&dsn, false) {
+fn try_connect(config: &mut postgres::config::Config, retry: bool) -> Result<postgres::Client> {
+    match connect(config, false) {
         Ok(client) => Ok(client),
         Err(err) => {
             if retry && &format!("{}", err) == "invalid configuration: password missing" {
-                Ok(connect(dsn, true)?)
+                Ok(connect(config, true)?)
             } else {
                 Err(err.into())
             }
@@ -94,49 +94,49 @@ fn try_connect(dsn: &str, retry: bool) -> Result<postgres::Client> {
 }
 
 fn connect(
-    dsn: &str,
+    config: &mut postgres::config::Config,
     ask_password: bool,
 ) -> std::result::Result<postgres::Client, postgres::Error> {
-    let dsn = if ask_password {
+    if ask_password {
         let password = rpassword::prompt_password_stdout("Password: ").unwrap();
 
-        format!("{} password={}", dsn, password.trim_matches('\n'))
-    } else {
-        dsn.to_string()
-    };
+        config.password(password.trim_matches('\n'));
+    }
 
-    let client = postgres::Client::connect(&dsn, postgres::NoTls)?;
+    let client = config.connect(postgres::NoTls)?;
 
     Ok(client)
 }
 
-fn dsn(opt: &Opt) -> String {
+fn config(opt: &Opt) -> Result<postgres::config::Config> {
+    let mut config = postgres::config::Config::new();
+
     let host = opt
         .host
         .clone()
         .or_else(|| std::env::var("PGHOST").ok())
         .unwrap_or_else(|| "/run/postgresql".to_string());
+    config.host(&host);
+
     let user = opt
         .user
         .clone()
         .or_else(|| std::env::var("PGUSER").ok())
         .unwrap_or_else(|| std::env::var("USER").unwrap());
+    config.user(&user);
+
     let dbname = opt
         .dbname
         .clone()
         .or_else(|| std::env::var("PGDATABASE").ok())
         .unwrap_or_else(|| user.clone());
+    config.dbname(&dbname);
 
-    let mut dsn = format!("host={} user={} dbname={}", host, user, dbname);
-
-    let port = opt
-        .port
-        .clone()
-        .or_else(|| std::env::var("PGPORT").ok());
+    let port = opt.port.clone().or_else(|| std::env::var("PGPORT").ok());
 
     if let Some(port) = port {
-        dsn.push_str(&format!(" port={}", port));
+        config.port(port.parse()?);
     }
 
-    dsn
+    Ok(config)
 }
