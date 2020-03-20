@@ -3,9 +3,11 @@
 mod errors;
 mod explain;
 mod graph;
+mod pgpass;
 
 use errors::*;
 use explain::*;
+use pgpass::*;
 use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
@@ -132,10 +134,18 @@ fn config(opt: &Opt) -> Result<postgres::config::Config> {
         .unwrap_or_else(|| user.clone());
     config.dbname(&dbname);
 
-    let port = opt.port.clone().or_else(|| std::env::var("PGPORT").ok());
+    let port = opt
+        .port
+        .clone()
+        .or_else(|| std::env::var("PGPORT").ok())
+        .unwrap_or_else(|| "5432".to_string())
+        .parse()?;
+    config.port(port);
 
-    if let Some(port) = port {
-        config.port(port.parse()?);
+    let pgpass = PgPass::from_file();
+
+    if let Some(password) = pgpass.find(&host, port, &dbname, &user) {
+        config.password(&password);
     }
 
     Ok(config)
