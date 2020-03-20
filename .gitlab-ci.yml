@@ -1,6 +1,11 @@
 image: "rust:latest"
 
+stages:
+    - lint
+    - test
+
 lint:fmt:
+    stage: lint
     before_script:
         - rustup component add rustfmt-preview
     script:
@@ -14,11 +19,13 @@ lint:fmt:
           fi
 
 lint:clippy:
-        before_script:
-            - rustup component add clippy
-        script: cargo clippy -- --deny warnings
+    stage: lint
+    before_script:
+        - rustup component add clippy
+    script: cargo clippy -- --deny warnings
 
 .test: &test
+    stage: test
     before_script:
         - apt update -yqq
         - apt install -yqq --no-install-recommends graphviz
