@@ -136,23 +136,25 @@ impl Graph {
 }
 
 struct Node {
-    n_workers: usize,
+    cost: f32,
+    executed: bool,
     info: String,
+    n_workers: usize,
     rows: u32,
     time: Option<f32>,
-    cost: f32,
     ty: String,
 }
 
 impl Node {
     fn from(plan: &crate::Plan) -> Self {
         Self {
+            cost: Self::cost(&plan),
+            executed: plan.actual_loops != Some(0),
             info: Self::info(&plan),
             n_workers: plan.workers.len(),
             rows: plan.rows,
             time: Self::time(&plan),
             ty: plan.node.to_string(),
-            cost: Self::cost(&plan),
         }
     }
 
@@ -185,13 +187,14 @@ impl Node {
     fn time(plan: &crate::Plan) -> Option<f32> {
         if let Some(mut time) = plan.actual_total_time {
             if plan.workers.is_empty() {
-                time *= plan.actual_loops as f32;
+                time *= plan.actual_loops.unwrap_or(1) as f32;
             }
 
             for child in &plan.plans {
                 if child.parent_relationship != Some("InitPlan".to_string()) {
                     time -= if child.workers.is_empty() {
-                        child.actual_total_time.unwrap_or_default() * child.actual_loops as f32
+                        child.actual_total_time.unwrap_or_default()
+                            * child.actual_loops.unwrap_or(1) as f32
                     } else {
                         child.actual_total_time.unwrap_or_default()
                     }
@@ -242,7 +245,9 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
         let time = if let Some(time) = node.time {
             let time_percent = (time / self.execution_time * 100.).round().trunc();
 
-            if time < 1. {
+            if !node.executed {
+                "<td><font color=\"gray\">Never executed</font></td>".to_string()
+            } else if time < 1. {
                 format!("<td>&lt; 1 ms | {} %</td>", time_percent)
             } else {
                 let color = Self::duration_color(time_percent);
@@ -298,6 +303,19 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
 
     fn node_style(&'a self, _: &Nd) -> dot::Style {
         dot::Style::Rounded
+    }
+
+    fn node_color(&'a self, n: &Nd) -> Option<dot::LabelText<'a>> {
+        let node = match self.node(*n) {
+            Some(node) => node,
+            None => return None,
+        };
+
+        if node.executed {
+            None
+        } else {
+            Some(dot::LabelText::LabelStr("gray".into()))
+        }
     }
 
     fn kind(&self) -> dot::Kind {

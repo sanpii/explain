@@ -14,8 +14,8 @@ pub(crate) struct Explain {
 
 #[derive(Debug, serde::Deserialize)]
 pub(crate) struct Plan {
-    #[serde(rename = "Actual Loops")]
-    pub actual_loops: usize,
+    #[serde(rename = "Actual Loops", default)]
+    pub actual_loops: Option<usize>,
     #[serde(rename = "Actual Startup Time", default)]
     pub actual_startup_time: Option<f32>,
     #[serde(rename = "Actual Total Time", default)]
