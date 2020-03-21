@@ -10,7 +10,7 @@ struct Graph {
     edges: Vec<(usize, usize)>,
     current_id: usize,
     max_cost: f32,
-    execution_time: f32,
+    execution_time: Option<f32>,
 }
 
 impl Graph {
@@ -20,7 +20,7 @@ impl Graph {
             edges: Vec::new(),
             current_id: 0,
             max_cost: 0.,
-            execution_time: 0.,
+            execution_time: None,
         }
     }
 
@@ -30,8 +30,7 @@ impl Graph {
         graph.execution_time = explain
             .execution_time
             .or(explain.total_runtime)
-            .or(explain.plan.actual_total_time)
-            .unwrap();
+            .or(explain.plan.actual_total_time);
         graph.plan(&explain, None, &explain.plan);
 
         graph
@@ -243,7 +242,7 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
         };
 
         let time = if let Some(time) = node.time {
-            let time_percent = (time / self.execution_time * 100.).round().trunc();
+            let time_percent = (time / self.execution_time.unwrap() * 100.).round().trunc();
 
             if !node.executed {
                 "<td><font color=\"gray\">Never executed</font></td>".to_string()
