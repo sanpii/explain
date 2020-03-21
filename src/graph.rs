@@ -195,7 +195,9 @@ impl Node {
         let mut cost = plan.total_cost;
 
         for child in &plan.plans {
-            cost -= child.total_cost;
+            if child.parent_relationship != Some("InitPlan".to_string()) {
+                cost -= child.total_cost;
+            }
         }
 
         cost.max(0.)
