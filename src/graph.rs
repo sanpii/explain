@@ -29,6 +29,7 @@ impl Graph {
 
         graph.execution_time = explain
             .execution_time
+            .or(explain.total_runtime)
             .or(explain.plan.actual_total_time)
             .unwrap();
         graph.plan(&explain, None, &explain.plan);

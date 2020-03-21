@@ -4,6 +4,8 @@ pub(crate) struct Explain {
     pub plan: Plan,
     #[serde(rename = "Execution Time", default)]
     pub execution_time: Option<f32>,
+    #[serde(rename = "Total Runtime", default)]
+    pub total_runtime: Option<f32>,
     #[serde(rename = "Planning Time", default)]
     pub planning_time: Option<f32>,
     #[serde(rename = "Triggers", default)]
