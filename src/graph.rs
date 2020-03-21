@@ -300,5 +300,5 @@ fn cost(plan: &crate::Plan) -> f32 {
         cost -= child.total_cost;
     }
 
-    cost
+    cost.max(0.)
 }
