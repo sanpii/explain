@@ -86,10 +86,8 @@ impl Node {
                 let color = duration_color(time_percent);
 
                 format!(
-                    "<td bgcolor=\"{}\">{} ms | {} %</td>",
-                    color,
-                    time.round(),
-                    time_percent
+                    "<td bgcolor=\"{}\">{:.2} ms | {} %</td>",
+                    color, time, time_percent
                 )
             }
         } else {
