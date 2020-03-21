@@ -15,6 +15,11 @@ Transform postgresql explain to a graph.
 
 ## Install
 
+If you use Arch Linux, explain is available in
+[AUR](https://aur.archlinux.org/packages/explain/).
+
+### Manually
+
 ```bash
 git clone https://github.com/sanpii/explain
 cd explain
