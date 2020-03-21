@@ -25,16 +25,16 @@ impl Graph {
     fn from(explain: &crate::Explain) -> Self {
         let mut graph = Self::new();
 
-        graph.plan(&explain.plan, None, &explain.plan);
+        graph.plan(&explain, None, &explain.plan);
 
         graph
     }
 
-    fn plan(&mut self, root: &crate::Plan, root_id: Option<usize>, plan: &crate::Plan) {
+    fn plan(&mut self, explain: &crate::Explain, root_id: Option<usize>, plan: &crate::Plan) {
         let id = self.current_id;
         self.current_id += 1;
 
-        let node = Node::from(root, plan);
+        let node = Node::from(explain, plan);
         if node.cost > self.max_cost {
             self.max_cost = node.cost;
         }
@@ -45,7 +45,7 @@ impl Graph {
         }
 
         for child in &plan.plans {
-            self.plan(root, Some(id), child);
+            self.plan(explain, Some(id), child);
         }
     }
 
@@ -72,13 +72,15 @@ struct Node {
 }
 
 impl Node {
-    fn from(root: &crate::Plan, plan: &crate::Plan) -> Self {
+    fn from(explain: &crate::Explain, plan: &crate::Plan) -> Self {
         let info = info(&plan);
         let cost = cost(&plan);
         let time = if let Some(time) = time(&plan) {
-            let time_percent = (time / root.actual_total_time.unwrap() * 100.)
-                .round()
-                .trunc();
+            let execution_time = explain
+                .execution_time
+                .or(explain.plan.actual_total_time)
+                .unwrap();
+            let time_percent = (time / execution_time * 100.).round().trunc();
 
             if time < 1. {
                 format!("<td>&lt; 1 ms | {} %</td>", time_percent)
@@ -281,8 +283,12 @@ fn info(plan: &crate::Plan) -> String {
 
 fn time(plan: &crate::Plan) -> Option<f32> {
     if let Some(mut time) = plan.actual_total_time {
+        time *= plan.actual_loops as f32;
+
         for child in &plan.plans {
-            time -= child.actual_total_time.unwrap_or_default();
+            if child.parent_relationship != Some("InitPlan".to_string()) {
+                time -= child.actual_total_time.unwrap_or_default() * child.actual_loops as f32;
+            }
         }
 
         Some(time)

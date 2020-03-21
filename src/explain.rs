@@ -12,6 +12,8 @@ pub(crate) struct Explain {
 
 #[derive(Debug, serde::Deserialize)]
 pub(crate) struct Plan {
+    #[serde(rename = "Actual Loops")]
+    pub actual_loops: usize,
     #[serde(rename = "Actual Startup Time", default)]
     pub actual_startup_time: Option<f32>,
     #[serde(rename = "Actual Total Time", default)]
@@ -38,7 +40,7 @@ pub(crate) struct Plan {
     pub workers: Vec<Worker>,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, PartialEq)]
 #[serde(tag = "Node Type")]
 pub(crate) enum Node {
     Aggregate {
@@ -194,7 +196,7 @@ impl std::fmt::Display for Node {
     }
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, PartialEq)]
 pub(crate) enum Operation {
     Delete,
     Insert,
@@ -202,7 +204,7 @@ pub(crate) enum Operation {
     Update,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, PartialEq)]
 pub(crate) enum Strategy {
     Hashed,
     Mixed,
@@ -210,14 +212,14 @@ pub(crate) enum Strategy {
     Sorted,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, PartialEq)]
 pub(crate) enum PartialMode {
     Finalize,
     Partial,
     Simple,
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, PartialEq)]
 pub(crate) enum JoinType {
     Anti,
     Full,
@@ -242,7 +244,7 @@ impl std::fmt::Display for JoinType {
     }
 }
 
-#[derive(Debug, serde::Deserialize)]
+#[derive(Debug, serde::Deserialize, PartialEq)]
 pub(crate) struct Relation {
     #[serde(rename = "Relation Name")]
     name: String,
