@@ -27,10 +27,7 @@ impl Graph {
     fn from(explain: &crate::Explain) -> Self {
         let mut graph = Self::new();
 
-        graph.execution_time = explain
-            .execution_time
-            .or(explain.plan.actual_total_time)
-            .unwrap();
+        graph.execution_time = explain.execution_time.or(explain.plan.actual_total_time).unwrap();
         graph.plan(&explain, None, &explain.plan);
 
         graph
@@ -156,7 +153,7 @@ impl Node {
     }
 
     fn info(plan: &crate::Plan) -> String {
-        match &plan.node {
+        let info = match &plan.node {
             crate::Node::Aggregate { keys, .. } => {
                 if keys.is_empty() {
                     String::new()
@@ -172,6 +169,12 @@ impl Node {
             crate::Node::Sort { keys, .. } => format!("by {}", keys.join(", ")),
             crate::Node::SeqScan { relation, .. } => format!("on {}", relation),
             _ => String::new(),
+        };
+
+        if info.len() > 80 {
+            format!("{}…", info.split_at(80).0)
+        } else {
+            info
         }
     }
 
@@ -227,7 +230,9 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
         };
 
         let time = if let Some(time) = node.time {
-            let time_percent = (time / self.execution_time * 100.).round().trunc();
+            let time_percent = (time / self.execution_time * 100.)
+                .round()
+                .trunc();
 
             if time < 1. {
                 format!("<td>&lt; 1 ms | {} %</td>", time_percent)
@@ -236,7 +241,9 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
 
                 format!(
                     "<td bgcolor=\"{}\">{:.2} ms | {} %</td>",
-                    color, time, time_percent
+                    color,
+                    time,
+                    time_percent
                 )
             }
         } else {
