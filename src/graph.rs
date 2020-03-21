@@ -27,7 +27,10 @@ impl Graph {
     fn from(explain: &crate::Explain) -> Self {
         let mut graph = Self::new();
 
-        graph.execution_time = explain.execution_time.or(explain.plan.actual_total_time).unwrap();
+        graph.execution_time = explain
+            .execution_time
+            .or(explain.plan.actual_total_time)
+            .unwrap();
         graph.plan(&explain, None, &explain.plan);
 
         graph
@@ -180,11 +183,17 @@ impl Node {
 
     fn time(plan: &crate::Plan) -> Option<f32> {
         if let Some(mut time) = plan.actual_total_time {
-            time *= plan.actual_loops as f32;
+            if plan.workers.is_empty() {
+                time *= plan.actual_loops as f32;
+            }
 
             for child in &plan.plans {
                 if child.parent_relationship != Some("InitPlan".to_string()) {
-                    time -= child.actual_total_time.unwrap_or_default() * child.actual_loops as f32;
+                    time -= if child.workers.is_empty() {
+                        child.actual_total_time.unwrap_or_default() * child.actual_loops as f32
+                    } else {
+                        child.actual_total_time.unwrap_or_default()
+                    }
                 }
             }
 
@@ -230,9 +239,7 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
         };
 
         let time = if let Some(time) = node.time {
-            let time_percent = (time / self.execution_time * 100.)
-                .round()
-                .trunc();
+            let time_percent = (time / self.execution_time * 100.).round().trunc();
 
             if time < 1. {
                 format!("<td>&lt; 1 ms | {} %</td>", time_percent)
@@ -241,9 +248,7 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
 
                 format!(
                     "<td bgcolor=\"{}\">{:.2} ms | {} %</td>",
-                    color,
-                    time,
-                    time_percent
+                    color, time, time_percent
                 )
             }
         } else {
