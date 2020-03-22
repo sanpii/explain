@@ -12,26 +12,34 @@ use structopt::StructOpt;
 
 #[derive(Debug, StructOpt)]
 struct Opt {
-    /// this option execute explain analyse
-    /// /!\ Be carful, that execute the query!
+    /// this option executes explain analyse
+    /// /!\ Be carful, that executes the query!
     #[structopt(long)]
     analyse: bool,
+    /// Specifies the command to execute
     #[structopt(short, long)]
     command: Option<String>,
+    /// Specifies the name of the database to connect to
     dbname: Option<String>,
     /// Don’t execute the query, the input is already an explain plan in JSON
     #[structopt(short = "n", long)]
     dry_run: bool,
+    /// Read commands from the file, rather than standard input
     #[structopt(short, long)]
     file: Option<String>,
+    /// Specifies the host name of the machine on which the server is running
     #[structopt(short, long)]
     host: Option<String>,
+    /// Put output into file
     #[structopt(short, long)]
     output: Option<String>,
+    /// Prompt for a password before connecting to a database
     #[structopt(short = "W", long)]
     password: bool,
+    /// Specifies the TCP port on which the server is listening for connections
     #[structopt(short, long)]
     port: Option<String>,
+    /// Connect to the database as the user
     #[structopt(short = "U", long)]
     user: Option<String>,
 }
