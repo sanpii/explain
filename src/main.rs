@@ -45,6 +45,8 @@ struct Opt {
 }
 
 fn main() -> Result<()> {
+    human_panic::setup_panic!();
+
     let opt = Opt::from_args();
 
     let query = match (&opt.command, &opt.file) {

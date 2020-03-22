@@ -3,9 +3,12 @@ name = "explain"
 version = "1.0.0"
 authors = ["Sanpi <sanpi@homecomputing.fr>"]
 edition = "2018"
+homepage = "https://github.com/sanpii/explain"
+repository = "https://github.com/sanpii/explain.git"
 
 [dependencies]
 dot = "0.1"
+human-panic = "1.0"
 rpassword = "4.0"
 serde_json = "1.0"
 structopt = "0.3"
