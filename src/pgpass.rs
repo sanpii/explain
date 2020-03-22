@@ -6,32 +6,66 @@ struct Auth {
     password: String,
 }
 
+impl Auth {
+    fn split<'a>(line: &'a str) -> Vec<&'a str> {
+        let mut tokens = Vec::new();
+        let mut slash = false;
+        let mut last_pos = 0;
+
+        for (pos, c) in line.char_indices() {
+            if c == ':' && !slash {
+                tokens.push(line.get(last_pos..pos).unwrap());
+
+                last_pos = pos + 1;
+            }
+
+            slash = c == '\\' && !slash;
+        }
+
+        tokens.push(line.get(last_pos..).unwrap());
+
+        tokens
+    }
+
+    fn unescape(s: &str) -> String {
+        s.replace("\\\\", "\\").replace("\\:", ":")
+    }
+}
+
+impl std::convert::TryFrom<&str> for Auth {
+    type Error = ();
+
+    fn try_from(line: &str) -> std::result::Result<Self, Self::Error> {
+        let tokens = Self::split(line);
+
+        if tokens.len() != 5 {
+            return Err(());
+        }
+
+        let auth = Auth {
+            hostname: Self::unescape(tokens[0]),
+            port: Self::unescape(tokens[1]),
+            database: Self::unescape(tokens[2]),
+            username: Self::unescape(tokens[3]),
+            password: Self::unescape(tokens[4]),
+        };
+
+        Ok(auth)
+    }
+}
+
 pub(crate) struct PgPass {
     entries: Vec<Auth>,
 }
 
 impl PgPass {
     fn from_str(pgpass: &str) -> Self {
+        use std::convert::TryInto;
+
         let entries = pgpass
             .split('\n')
             .filter(|e| !e.trim_start().starts_with('#'))
-            .filter_map(|e| {
-                let tokens = e.split(':').collect::<Vec<_>>();
-
-                if tokens.len() != 5 {
-                    return None;
-                }
-
-                let auth = Auth {
-                    hostname: tokens[0].to_string(),
-                    port: tokens[1].to_string(),
-                    database: tokens[2].to_string(),
-                    username: tokens[3].to_string(),
-                    password: tokens[4].to_string(),
-                };
-
-                Some(auth)
-            })
+            .filter_map(|e| e.try_into().ok())
             .collect();
 
         Self { entries }
@@ -119,6 +153,16 @@ mod test {
         assert_eq!(
             Some("1234".to_string()),
             pgpass.find("localhost", 5432, "postgres", "postgres")
+        );
+    }
+
+    #[test]
+    fn parse_escape() {
+        let pgpass = PgPass::from_str("local\\:host:*:post\\\\gres:*:1234");
+
+        assert_eq!(
+            Some("1234".to_string()),
+            pgpass.find("local:host", 5432, "post\\gres", "postgres")
         );
     }
 }
