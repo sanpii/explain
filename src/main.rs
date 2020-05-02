@@ -152,9 +152,15 @@ fn config(opt: &Opt) -> Result<postgres::config::Config> {
         .parse()?;
     config.port(port);
 
-    let pgpass = PgPass::from_file();
+    let password = match std::env::var("PGPASSWORD") {
+        Ok(password) => Some(password),
+        Err(_) => {
+            let pgpass = PgPass::from_file();
+            pgpass.find(&host, port, &dbname, &user)
+        }
+    };
 
-    if let Some(password) = pgpass.find(&host, port, &dbname, &user) {
+    if let Some(password) = password {
         config.password(&password);
     }
 
