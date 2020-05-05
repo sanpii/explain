@@ -4,7 +4,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 pub enum Error {
     Convert(std::num::ParseIntError),
     Io(std::io::Error),
-    Postgresql(postgres::Error),
+    Elephantry(elephantry::Error),
     Serde(serde_json::Error),
 }
 
@@ -16,9 +16,9 @@ impl std::fmt::Display for Error {
     }
 }
 
-impl From<postgres::Error> for Error {
-    fn from(error: postgres::Error) -> Self {
-        Self::Postgresql(error)
+impl From<elephantry::Error> for Error {
+    fn from(error: elephantry::Error) -> Self {
+        Self::Elephantry(error)
     }
 }
 

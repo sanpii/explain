@@ -3,14 +3,12 @@
 mod errors;
 mod explain;
 mod graph;
-mod pgpass;
 
 use errors::*;
 use explain::*;
-use pgpass::*;
 use structopt::StructOpt;
 
-#[derive(Debug, StructOpt)]
+#[derive(Clone, Debug, StructOpt)]
 struct Opt {
     /// this option executes explain analyse
     /// /!\ Be carful, that executes the query!
@@ -44,6 +42,18 @@ struct Opt {
     user: Option<String>,
 }
 
+impl Into<elephantry::Config> for Opt {
+    fn into(self) -> elephantry::Config {
+        elephantry::Config {
+            host: self.host,
+            user: self.user,
+            dbname: self.dbname,
+            port: self.port,
+            password: None,
+        }
+    }
+}
+
 fn main() -> Result<()> {
     human_panic::setup_panic!();
 
@@ -71,10 +81,10 @@ fn main() -> Result<()> {
             analyse, query
         );
 
-        let mut client = try_connect(&mut config(&opt)?, opt.password)?;
+        let client = try_connect(&opt)?;
 
-        let results = client.query_one(explain_query.as_str(), &[])?;
-        results.get("QUERY PLAN")
+        let results = client.execute(explain_query.as_str())?;
+        results.get(0).get("\"QUERY PLAN\"")
     };
 
     let explains: Vec<Explain> = serde_json::from_value(json)?;
@@ -92,77 +102,20 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn try_connect(config: &mut postgres::config::Config, retry: bool) -> Result<postgres::Client> {
-    match connect(config, false) {
+fn try_connect(opt: &Opt) -> elephantry::Result<elephantry::Pool> {
+    let mut config = opt.clone().into();
+
+    match elephantry::Pool::from_config(&config) {
         Ok(client) => Ok(client),
         Err(err) => {
-            if retry && &format!("{}", err) == "invalid configuration: password missing" {
-                Ok(connect(config, true)?)
+            if opt.password && &format!("{}", err) == "invalid configuration: password missing" {
+                let password = rpassword::prompt_password_stdout("Password: ").unwrap();
+                config.password = Some(password.trim_matches('\n').to_string());
+
+                elephantry::Pool::from_config(&config)
             } else {
                 Err(err.into())
             }
         }
     }
-}
-
-fn connect(
-    config: &mut postgres::config::Config,
-    ask_password: bool,
-) -> std::result::Result<postgres::Client, postgres::Error> {
-    if ask_password {
-        let password = rpassword::prompt_password_stdout("Password: ").unwrap();
-
-        config.password(password.trim_matches('\n'));
-    }
-
-    let client = config.connect(postgres::NoTls)?;
-
-    Ok(client)
-}
-
-fn config(opt: &Opt) -> Result<postgres::config::Config> {
-    let mut config = postgres::config::Config::new();
-
-    let host = opt
-        .host
-        .clone()
-        .or_else(|| std::env::var("PGHOST").ok())
-        .unwrap_or_else(|| "/run/postgresql".to_string());
-    config.host(&host);
-
-    let user = opt
-        .user
-        .clone()
-        .or_else(|| std::env::var("PGUSER").ok())
-        .unwrap_or_else(|| std::env::var("USER").unwrap());
-    config.user(&user);
-
-    let dbname = opt
-        .dbname
-        .clone()
-        .or_else(|| std::env::var("PGDATABASE").ok())
-        .unwrap_or_else(|| user.clone());
-    config.dbname(&dbname);
-
-    let port = opt
-        .port
-        .clone()
-        .or_else(|| std::env::var("PGPORT").ok())
-        .unwrap_or_else(|| "5432".to_string())
-        .parse()?;
-    config.port(port);
-
-    let password = match std::env::var("PGPASSWORD") {
-        Ok(password) => Some(password),
-        Err(_) => {
-            let pgpass = PgPass::from_file();
-            pgpass.find(&host, port, &dbname, &user)
-        }
-    };
-
-    if let Some(password) = password {
-        config.password(&password);
-    }
-
-    Ok(config)
 }

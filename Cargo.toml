@@ -17,6 +17,6 @@ structopt = "0.3"
 version = "1.0"
 features = ["derive"]
 
-[dependencies.postgres]
-version = "0.17"
-features = ["with-serde_json-1"]
+[dependencies.elephantry]
+version = "0.2"
+features = ["json"]
