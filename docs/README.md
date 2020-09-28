@@ -1,5 +1,6 @@
 # Explain
 
+[![Github actions](https://github.com/sanpii/explain/workflows/.github/workflows/ci.yml/badge.svg)](https://github.com/sanpii/explain/actions?query=workflow%3A.github%2Fworkflows%2Fci.yml)
 [![Build Status](https://gitlab.com/sanpi/explain/badges/master/pipeline.svg)](https://gitlab.com/sanpi/explain/commits/master)
 
 Transform postgresql explain to a graph.

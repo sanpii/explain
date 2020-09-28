@@ -11,6 +11,7 @@ else
 endif
 
 all: $(TARGET)
+.PHONY: all
 
 $(TARGET):
 	$(CARGO) build $(CARGO_FLAGS)
@@ -18,14 +19,20 @@ $(TARGET):
 install:
 	install --directory $(PREFIX)/bin
 	install $(TARGET) $(PREFIX)/bin/
+.PHONY: install
 
 examples: $(EXAMPLES:.json=.png)
+.PHONY: examples
 
 %.dot: %.json $(TARGET)
-	$(TARGET) --dry-run --file $< --output $@ _
+	$(TARGET) --dry-run --file $< --output $@
 
 %.png: %.dot
 	dot -Tpng $^ > $@
 
-.PHONY: all build install
+test: examples
+	git diff examples/*.json
+	git diff-index --quiet HEAD examples/*.json
+.PHONY: test
+
 .PRECIOUS: %.dot

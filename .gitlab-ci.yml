@@ -11,15 +11,7 @@ lint:fmt:
     stage: lint
     before_script:
         - rustup component add rustfmt
-    script:
-        - cargo fmt
-        - if test $(git ls-files --modified | wc -l) -ne 0;
-          then
-              echo 'You have introduced some unformated code:';
-              git ls-files --modified | sed 's/^/* /';
-              echo 'Please run `cargo fmt` and amend your PR.';
-              exit 1;
-          fi
+    script: cargo fmt -- --check
 
 lint:clippy:
     stage: lint
@@ -30,32 +22,16 @@ lint:clippy:
 .test: &test
     stage: test
     before_script:
+        - MODE=$(echo "$CI_JOB_NAME" | cut -d ':' -f 2)
         - apt update -yqq
         - apt install -yqq --no-install-recommends graphviz
-        - make MODE=$MODE
-    script:
-        - status=0;
-            for plan in $(find examples/ -name '*.json');
-            do
-                cargo run -- --dry-run --file "$plan" --output "${plan/json/dot}" -;
-                if test $(git ls-files --modified | wc -l) -ne 0;
-                then
-                    echo "$plan is not the same";
-                    status=1;
-                fi;
-                dot -Tpng "${plan/json/dot}" > /dev/null;
-            done;
-            exit $status
+    script: make test MODE=$MODE
 
 test:debug:
     <<: *test
-    variables:
-        MODE: debug
 
 test:release:
     <<: *test
-    variables:
-        MODE: release
 
 cache:
     paths:
