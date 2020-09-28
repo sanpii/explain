@@ -114,7 +114,7 @@ fn try_connect(opt: &Opt) -> elephantry::Result<elephantry::Pool> {
 
                 elephantry::Pool::from_config(&config)
             } else {
-                Err(err.into())
+                Err(err)
             }
         }
     }
