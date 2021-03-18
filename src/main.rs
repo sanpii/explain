@@ -49,7 +49,8 @@ impl Into<elephantry::Config> for Opt {
             user: self.user,
             dbname: self.dbname,
             port: self.port,
-            password: None,
+
+            ..Default::default()
         }
     }
 }
