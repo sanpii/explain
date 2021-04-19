@@ -4,41 +4,41 @@ mod errors;
 mod explain;
 mod graph;
 
+use clap::Parser;
 use errors::*;
 use explain::*;
-use structopt::StructOpt;
 
-#[derive(Clone, Debug, StructOpt)]
+#[derive(Clone, Debug, Parser)]
 struct Opt {
     /// this option executes explain analyse
     /// /!\ Be carful, that executes the query!
-    #[structopt(long)]
+    #[clap(long)]
     analyse: bool,
     /// Specifies the command to execute
-    #[structopt(short, long)]
+    #[clap(short, long)]
     command: Option<String>,
     /// Specifies the name of the database to connect to
     dbname: Option<String>,
     /// Don’t execute the query, the input is already an explain plan in JSON
-    #[structopt(short = "n", long)]
+    #[clap(short = 'n', long)]
     dry_run: bool,
     /// Read commands from the file, rather than standard input
-    #[structopt(short, long)]
+    #[clap(short, long)]
     file: Option<String>,
     /// Specifies the host name of the machine on which the server is running
-    #[structopt(short, long)]
+    #[clap(short, long)]
     host: Option<String>,
     /// Put output into file
-    #[structopt(short, long)]
+    #[clap(short, long)]
     output: Option<String>,
     /// Prompt for a password before connecting to a database
-    #[structopt(short = "W", long)]
+    #[clap(short = 'W', long)]
     password: bool,
     /// Specifies the TCP port on which the server is listening for connections
-    #[structopt(short, long)]
+    #[clap(short, long)]
     port: Option<String>,
     /// Connect to the database as the user
-    #[structopt(short = "U", long)]
+    #[clap(short = 'U', long)]
     user: Option<String>,
 }
 
@@ -58,7 +58,7 @@ impl From<Opt> for elephantry::Config {
 fn main() -> Result {
     human_panic::setup_panic!();
 
-    let opt = Opt::from_args();
+    let opt = Opt::parse();
 
     let query = match (&opt.command, &opt.file) {
         (Some(query), None) => query.clone(),
