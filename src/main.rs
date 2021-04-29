@@ -42,13 +42,13 @@ struct Opt {
     user: Option<String>,
 }
 
-impl Into<elephantry::Config> for Opt {
-    fn into(self) -> elephantry::Config {
-        elephantry::Config {
-            host: self.host,
-            user: self.user,
-            dbname: self.dbname,
-            port: self.port,
+impl From<Opt> for elephantry::Config {
+    fn from(opt: Opt) -> Self {
+        Self {
+            host: opt.host,
+            user: opt.user,
+            dbname: opt.dbname,
+            port: opt.port,
 
             ..Default::default()
         }
