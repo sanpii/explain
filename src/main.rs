@@ -55,7 +55,7 @@ impl From<Opt> for elephantry::Config {
     }
 }
 
-fn main() -> Result<()> {
+fn main() -> Result {
     human_panic::setup_panic!();
 
     let opt = Opt::from_args();
