@@ -30,6 +30,12 @@ jobs:
         with:
           toolchain: stable
           components: clippy
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang libpq-dev
+
       - name: Run clippy
         uses: actions-rs/cargo@v1
         with:
@@ -49,11 +55,10 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Install graphviz
-        if: runner.os == 'Linux'
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y graphviz
+          sudo apt-get install -y clang graphviz libpq-dev
 
       - name: test
         run: make test MODE="${{ matrix.mode }}"

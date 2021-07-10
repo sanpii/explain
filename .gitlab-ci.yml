@@ -16,6 +16,8 @@ lint:fmt:
 lint:clippy:
     stage: lint
     before_script:
+        - apt update -yqq
+        - apt install -yqq --no-install-recommends clang libpq-dev
         - rustup component add clippy
     script: cargo clippy -- --deny warnings
 
@@ -24,7 +26,7 @@ lint:clippy:
     before_script:
         - MODE=$(echo "$CI_JOB_NAME" | cut -d ':' -f 2)
         - apt update -yqq
-        - apt install -yqq --no-install-recommends graphviz
+        - apt install -yqq --no-install-recommends clang graphviz libpq-dev
     script: make test MODE=$MODE
 
 test:debug:
