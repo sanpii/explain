@@ -1,18 +1,18 @@
 # Explain
 
 [![Github actions](https://github.com/sanpii/explain/workflows/.github/workflows/ci.yml/badge.svg)](https://github.com/sanpii/explain/actions?query=workflow%3A.github%2Fworkflows%2Fci.yml)
-[![Build Status](https://gitlab.com/sanpi/explain/badges/master/pipeline.svg)](https://gitlab.com/sanpi/explain/commits/master)
+[![Build Status](https://gitlab.com/sanpi/explain/badges/main/pipeline.svg)](https://gitlab.com/sanpi/explain/commits/main)
 
 Transform postgresql explain to a graph.
 
-[<img title="Explain plan 1" src="https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_1.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_1.png)
-[<img title="Explain plan 2" src="https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_2.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_2.png)
-[<img title="Explain plan 3" src="https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_3.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_3.png)
-[<img title="Explain plan 4" src="https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_4.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_4.png)
-[<img title="Explain plan 5" src="https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_5.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_5.png)
-[<img title="Explain plan large" src="https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_large.png" width="300px" />](https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_large.png)
-[<img title="Explain plan parallel" src="https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_parallel.png" height="250px" />](https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_parallel.png)
-[<img title="Explain plan trigger" src="https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_trigger.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/master/examples/plan_trigger.png)
+[<img title="Explain plan 1" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_1.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_1.png)
+[<img title="Explain plan 2" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_2.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_2.png)
+[<img title="Explain plan 3" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_3.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_3.png)
+[<img title="Explain plan 4" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_4.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_4.png)
+[<img title="Explain plan 5" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_5.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_5.png)
+[<img title="Explain plan large" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_large.png" width="300px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_large.png)
+[<img title="Explain plan parallel" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_parallel.png" height="250px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_parallel.png)
+[<img title="Explain plan trigger" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_trigger.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_trigger.png)
 
 ## Install
 
