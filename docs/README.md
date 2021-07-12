@@ -5,14 +5,14 @@
 
 Transform postgresql explain to a graph.
 
-[<img title="Explain plan 1" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_1.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_1.png)
-[<img title="Explain plan 2" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_2.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_2.png)
-[<img title="Explain plan 3" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_3.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_3.png)
-[<img title="Explain plan 4" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_4.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_4.png)
-[<img title="Explain plan 5" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_5.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_5.png)
-[<img title="Explain plan large" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_large.png" width="300px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_large.png)
-[<img title="Explain plan parallel" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_parallel.png" height="250px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_parallel.png)
-[<img title="Explain plan trigger" src="https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_trigger.png" width="200px" />](https://raw.githubusercontent.com/sanpii/explain/main/examples/plan_trigger.png)
+[<img title="Explain plan 1" src="https://pointillism.io/sanpii/explain/main/examples/plan_1.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_1.png)
+[<img title="Explain plan 2" src="https://pointillism.io/sanpii/explain/main/examples/plan_2.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_2.dot.png)
+[<img title="Explain plan 3" src="https://pointillism.io/sanpii/explain/main/examples/plan_3.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_3.dot.png)
+[<img title="Explain plan 4" src="https://pointillism.io/sanpii/explain/main/examples/plan_4.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_4.dot.png)
+[<img title="Explain plan 5" src="https://pointillism.io/sanpii/explain/main/examples/plan_5.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_5.dot.png)
+[<img title="Explain plan large" src="https://pointillism.io/sanpii/explain/main/examples/plan_large.dot.png" width="300px" />](https://pointillism.io/sanpii/explain/main/examples/plan_large.dot.png)
+[<img title="Explain plan parallel" src="https://pointillism.io/sanpii/explain/main/examples/plan_parallel.dot.png" height="250px" />](https://pointillism.io/sanpii/explain/main/examples/plan_parallel.dot.png)
+[<img title="Explain plan trigger" src="https://pointillism.io/sanpii/explain/main/examples/plan_trigger.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_trigger.dot.png)
 
 ## Install
 
