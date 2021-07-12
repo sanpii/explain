@@ -6,7 +6,7 @@
 Transform postgresql explain to a graph.
 
 [<img title="Explain plan 1" src="https://pointillism.io/sanpii/explain/main/examples/plan_1.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_1.png)
-[<img title="Explain plan 2" src="https://pointillism.io/sanpii/explain/main/examples/plan_2.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_2.dot.png)
+[<img title="Explain plan 2" src="https://pointillism.io/sanpii/explain/main/examples/plan_2.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_2.dot.png)
 [<img title="Explain plan 3" src="https://pointillism.io/sanpii/explain/main/examples/plan_3.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_3.dot.png)
 [<img title="Explain plan 4" src="https://pointillism.io/sanpii/explain/main/examples/plan_4.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_4.dot.png)
 [<img title="Explain plan 5" src="https://pointillism.io/sanpii/explain/main/examples/plan_5.dot.png" width="200px" />](https://pointillism.io/sanpii/explain/main/examples/plan_5.dot.png)
