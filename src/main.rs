@@ -107,22 +107,19 @@ fn try_connect(opt: &Opt) -> elephantry::Result<elephantry::Pool> {
     {
         Ok(client)
     } else {
-        {
-            let mut config = opt.clone().into();
+        let mut config = opt.clone().into();
 
-            match elephantry::Pool::from_config(&config) {
-                Ok(client) => Ok(client),
-                Err(err) => {
-                    if opt.password
-                        && &format!("{}", err) == "invalid configuration: password missing"
-                    {
-                        let password = rpassword::prompt_password_stdout("Password: ").unwrap();
-                        config.password = Some(password.trim_matches('\n').to_string());
+        match elephantry::Pool::from_config(&config) {
+            Ok(client) => Ok(client),
+            Err(err) => {
+                if opt.password && &format!("{}", err) == "invalid configuration: password missing"
+                {
+                    let password = rpassword::prompt_password_stdout("Password: ").unwrap();
+                    config.password = Some(password.trim_matches('\n').to_string());
 
-                        elephantry::Pool::from_config(&config)
-                    } else {
-                        Err(err)
-                    }
+                    elephantry::Pool::from_config(&config)
+                } else {
+                    Err(err)
                 }
             }
         }
