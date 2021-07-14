@@ -16,6 +16,8 @@ Transform postgresql explain to a graph.
 
 ## Install
 
+[![Packaging status](https://repology.org/badge/vertical-allrepos/explain.svg)](https://repology.org/project/explain/versions)
+
 If you use Arch Linux, explain is available in
 [AUR](https://aur.archlinux.org/packages/explain/).
 
