@@ -31,7 +31,7 @@ impl Graph {
             .execution_time
             .or(explain.total_runtime)
             .or(explain.plan.actual_total_time);
-        graph.plan(&explain, None, &explain.plan);
+        graph.plan(explain, None, &explain.plan);
 
         graph
     }
@@ -147,12 +147,12 @@ struct Node {
 impl Node {
     fn from(plan: &crate::Plan) -> Self {
         Self {
-            cost: Self::cost(&plan),
+            cost: Self::cost(plan),
             executed: plan.actual_loops != Some(0),
-            info: Self::info(&plan),
+            info: Self::info(plan),
             n_workers: plan.workers.len(),
             rows: plan.rows,
-            time: Self::time(&plan),
+            time: Self::time(plan),
             ty: plan.node.to_string(),
         }
     }
