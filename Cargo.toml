@@ -7,7 +7,7 @@ homepage = "https://github.com/sanpii/explain"
 repository = "https://github.com/sanpii/explain.git"
 
 [dependencies]
-dot = "0.1"
+dot = { git = "https://github.com/sanpii/dot-rust/", branch = "subgraph" }
 human-panic = "1.0"
 rpassword = "5.0"
 serde_json = "1.0"

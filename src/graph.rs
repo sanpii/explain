@@ -2,9 +2,11 @@ pub(crate) fn dot(explain: &crate::Explain) -> String {
     Graph::from(explain).render()
 }
 
+type Su<'a> = String;
 type Nd = usize;
 type Ed<'a> = &'a (usize, usize);
 
+#[derive(Debug, Default)]
 struct Graph {
     nodes: Vec<Node>,
     edges: Vec<(usize, usize)>,
@@ -15,13 +17,7 @@ struct Graph {
 
 impl Graph {
     fn new() -> Self {
-        Self {
-            nodes: Vec::new(),
-            edges: Vec::new(),
-            current_id: 0,
-            max_cost: 0.,
-            execution_time: None,
-        }
+        Self::default()
     }
 
     fn from(explain: &crate::Explain) -> Self {
@@ -36,22 +32,26 @@ impl Graph {
         graph
     }
 
-    fn plan(&mut self, explain: &crate::Explain, root_id: Option<usize>, plan: &crate::Plan) {
+    fn plan(&mut self, explain: &crate::Explain, root: Option<&Node>, plan: &crate::Plan) {
         let id = self.current_id;
         self.current_id += 1;
 
-        let node = Node::from(plan);
+        let mut node = Node::from(id, plan);
+        if node.subplan.is_none() {
+            node.subplan = root.map(|x| x.subplan.clone()).flatten();
+        }
+
         if node.cost > self.max_cost {
             self.max_cost = node.cost;
         }
-        self.nodes.push(node);
+        self.nodes.push(node.clone());
 
-        if let Some(root_id) = root_id {
-            self.edges.push((root_id, id));
+        if let Some(root) = root {
+            self.edges.push((root.id, id));
         }
 
         for child in &plan.plans {
-            self.plan(explain, Some(id), child);
+            self.plan(explain, Some(&node), child);
         }
     }
 
@@ -134,7 +134,9 @@ impl Graph {
     }
 }
 
+#[derive(Clone, Debug)]
 struct Node {
+    id: usize,
     cost: f32,
     executed: bool,
     info: String,
@@ -142,11 +144,13 @@ struct Node {
     rows: u32,
     time: Option<f32>,
     ty: String,
+    subplan: Option<String>,
 }
 
 impl Node {
-    fn from(plan: &crate::Plan) -> Self {
+    fn from(id: usize, plan: &crate::Plan) -> Self {
         Self {
+            id,
             cost: Self::cost(plan),
             executed: plan.actual_loops != Some(0),
             info: Self::info(plan),
@@ -154,6 +158,7 @@ impl Node {
             rows: plan.rows,
             time: Self::time(plan),
             ty: plan.node.to_string(),
+            subplan: plan.subplan.clone(),
         }
     }
 
@@ -219,9 +224,27 @@ impl Node {
     }
 }
 
-impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
+impl<'a> dot::Labeller<'a, Nd, Ed<'a>, Su<'a>> for Graph {
     fn graph_id(&'a self) -> dot::Id<'a> {
         dot::Id::new("explain").unwrap()
+    }
+
+    fn subgraph_id(&'a self, s: &Su<'a>) -> Option<dot::Id<'a>> {
+        dot::Id::new(format!("cluster_{}", s.trim_start_matches("CTE "))).ok()
+    }
+
+    fn subgraph_label(&'a self, s: &Su<'a>) -> dot::LabelText<'a> {
+        let label = format!("<b>{}</b>", s);
+
+        dot::LabelText::HtmlStr(label.into())
+    }
+
+    fn subgraph_style(&'a self, _: &Su<'a>) -> dot::Style {
+        dot::Style::Filled
+    }
+
+    fn subgraph_color(&'a self, _: &Su<'a>) -> Option<dot::LabelText<'a>> {
+        Some(dot::LabelText::LabelStr("lightgrey".into()))
     }
 
     fn node_id(&'a self, n: &Nd) -> dot::Id<'a> {
@@ -322,7 +345,28 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
     }
 }
 
-impl<'a> dot::GraphWalk<'a, Nd, Ed<'a>> for Graph {
+impl<'a> dot::GraphWalk<'a, Nd, Ed<'a>, Su<'a>> for Graph {
+    fn subgraphs(&'a self) -> dot::Subgraphs<'a, Su<'a>> {
+        let mut s: Vec<String> = self
+            .nodes
+            .iter()
+            .filter_map(|n| n.subplan.clone())
+            .collect();
+
+        s.dedup();
+
+        s.into()
+    }
+
+    fn subgraph_nodes(&'a self, s: &Su<'a>) -> dot::Nodes<'a, Nd> {
+        self.nodes
+            .iter()
+            .enumerate()
+            .filter(|(_, n)| n.subplan == Some(s.to_string()))
+            .map(|(k, _)| k)
+            .collect()
+    }
+
     fn nodes(&self) -> dot::Nodes<'a, Nd> {
         (0..self.nodes.len()).collect()
     }
