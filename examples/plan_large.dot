@@ -1,4 +1,24 @@
 graph explain {
+subgraph cluster_q {
+label=<<b>CTE q</b>>;
+style="filled";
+color="lightgrey";
+
+node49;
+node50;
+node51;
+node52;
+node53;
+node54;
+node55;
+node56;
+node57;
+node58;
+node59;
+node60;
+
+}
+
     node0[label=<<table border="0" cellborder="0" cellspacing="5"><tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr><tr><td colspan="2" align="left">left join on ((n.nspname = q.nspname) AND (c.relname = q.tblname))</td></tr><tr><td colspan="2" border="1" >Cost: 5.19</td></tr><tr><td colspan="2" align="left">Rows: 12</td></tr></table>>][style="rounded"][shape="box"];
     node1[label=<<table border="0" cellborder="0" cellspacing="5"><tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr><tr><td colspan="2" align="left">inner join on (c.relname = s.tblname)</td></tr><tr><td colspan="2" border="1" >Cost: 1.01</td></tr><tr><td colspan="2" align="left">Rows: 12</td></tr></table>>][style="rounded"][shape="box"];
     node2[label=<<table border="0" cellborder="0" cellspacing="5"><tr><td align="left"><b>Hash Join</b></td><td>&lt; 1 ms | 0 %</td></tr><tr><td colspan="2" align="left">left join on (c.relname = c_1.relname)</td></tr><tr><td colspan="2" border="1" >Cost: 0.34</td></tr><tr><td colspan="2" align="left">Rows: 12</td></tr></table>>][style="rounded"][shape="box"];

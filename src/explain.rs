@@ -36,6 +36,8 @@ pub(crate) struct Plan {
     pub plans: Vec<Plan>,
     #[serde(rename = "Startup Cost")]
     pub startup_cost: f32,
+    #[serde(rename = "Subplan Name")]
+    pub subplan: Option<String>,
     #[serde(rename = "Total Cost")]
     pub total_cost: f32,
     #[serde(rename = "Workers", default)]
@@ -61,7 +63,10 @@ pub(crate) enum Node {
     BitmapHeapScan {},
     BitmapOr {},
     #[serde(rename = "CTE Scan")]
-    CteScan {},
+    CteScan {
+        #[serde(rename = "CTE Name")]
+        name: String,
+    },
     CustomScan {},
     #[serde(rename = "Foreign Scan")]
     ForeignScan {},

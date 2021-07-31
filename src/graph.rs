@@ -2,9 +2,11 @@ pub(crate) fn dot(explain: &crate::Explain) -> String {
     Graph::from(explain).render()
 }
 
+type Su<'a> = String;
 type Nd = usize;
 type Ed<'a> = &'a (usize, usize);
 
+#[derive(Debug, Default)]
 struct Graph {
     nodes: Vec<Node>,
     edges: Vec<(usize, usize)>,
@@ -15,13 +17,7 @@ struct Graph {
 
 impl Graph {
     fn new() -> Self {
-        Self {
-            nodes: Vec::new(),
-            edges: Vec::new(),
-            current_id: 0,
-            max_cost: 0.,
-            execution_time: None,
-        }
+        Self::default()
     }
 
     fn from(explain: &crate::Explain) -> Self {
@@ -36,29 +32,33 @@ impl Graph {
         graph
     }
 
-    fn plan(&mut self, explain: &crate::Explain, root_id: Option<usize>, plan: &crate::Plan) {
+    fn plan(&mut self, explain: &crate::Explain, root: Option<&Node>, plan: &crate::Plan) {
         let id = self.current_id;
         self.current_id += 1;
 
-        let node = Node::from(plan);
+        let mut node = Node::from(id, plan);
+        if node.subplan.is_none() {
+            node.subplan = root.map(|x| x.subplan.clone()).flatten();
+        }
+
         if node.cost > self.max_cost {
             self.max_cost = node.cost;
         }
-        self.nodes.push(node);
+        self.nodes.push(node.clone());
 
-        if let Some(root_id) = root_id {
-            self.edges.push((root_id, id));
+        if let Some(root) = root {
+            self.edges.push((root.id, id));
         }
 
         for child in &plan.plans {
-            self.plan(explain, Some(id), child);
+            self.plan(explain, Some(&node), child);
         }
     }
 
     fn render(&self) -> String {
         let mut output = Vec::new();
 
-        dot::render(self, &mut output).unwrap();
+        dot2::render(self, &mut output).unwrap();
 
         std::str::from_utf8(&output).unwrap().to_string()
     }
@@ -134,7 +134,9 @@ impl Graph {
     }
 }
 
+#[derive(Clone, Debug)]
 struct Node {
+    id: usize,
     cost: f32,
     executed: bool,
     info: String,
@@ -142,11 +144,13 @@ struct Node {
     rows: u32,
     time: Option<f32>,
     ty: String,
+    subplan: Option<String>,
 }
 
 impl Node {
-    fn from(plan: &crate::Plan) -> Self {
+    fn from(id: usize, plan: &crate::Plan) -> Self {
         Self {
+            id,
             cost: Self::cost(plan),
             executed: plan.actual_loops != Some(0),
             info: Self::info(plan),
@@ -154,6 +158,7 @@ impl Node {
             rows: plan.rows,
             time: Self::time(plan),
             ty: plan.node.to_string(),
+            subplan: plan.subplan.clone(),
         }
     }
 
@@ -219,16 +224,38 @@ impl Node {
     }
 }
 
-impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
-    fn graph_id(&'a self) -> dot::Id<'a> {
-        dot::Id::new("explain").unwrap()
+impl<'a> dot2::Labeller<'a> for Graph {
+    type Node = Nd;
+    type Edge = Ed<'a>;
+    type Subgraph = Su<'a>;
+
+    fn graph_id(&'a self) -> dot2::Result<dot2::Id<'a>> {
+        dot2::Id::new("explain")
     }
 
-    fn node_id(&'a self, n: &Nd) -> dot::Id<'a> {
-        dot::Id::new(format!("node{}", n)).unwrap()
+    fn subgraph_id(&'a self, s: &Su<'a>) -> Option<dot2::Id<'a>> {
+        dot2::Id::new(format!("cluster_{}", s.trim_start_matches("CTE "))).ok()
     }
 
-    fn node_label<'b>(&'b self, n: &Nd) -> dot::LabelText<'b> {
+    fn subgraph_label(&'a self, s: &Su<'a>) -> dot2::label::Text<'a> {
+        let label = format!("<b>{}</b>", s);
+
+        dot2::label::Text::HtmlStr(label.into())
+    }
+
+    fn subgraph_style(&'a self, _: &Su<'a>) -> dot2::Style {
+        dot2::Style::Filled
+    }
+
+    fn subgraph_color(&'a self, _: &Su<'a>) -> Option<dot2::label::Text<'a>> {
+        Some(dot2::label::Text::LabelStr("lightgrey".into()))
+    }
+
+    fn node_id(&'a self, n: &Nd) -> dot2::Result<dot2::Id<'a>> {
+        dot2::Id::new(format!("node{}", n))
+    }
+
+    fn node_label<'b>(&'b self, n: &Nd) -> dot2::Result<dot2::label::Text<'b>> {
         let node = self.node(*n).unwrap();
         let percent = node.cost / self.max_cost;
         let color = Self::color(percent);
@@ -286,10 +313,10 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
         ));
         label.push_str("</table>");
 
-        dot::LabelText::HtmlStr(label.into())
+        Ok(dot2::label::Text::HtmlStr(label.into()))
     }
 
-    fn node_shape(&'a self, n: &Nd) -> Option<dot::LabelText<'a>> {
+    fn node_shape(&'a self, n: &Nd) -> Option<dot2::label::Text<'a>> {
         let node = match self.node(*n) {
             Some(node) => node,
             None => return None,
@@ -297,14 +324,14 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
 
         let shape = if node.n_workers > 0 { "folder" } else { "box" };
 
-        Some(dot::LabelText::LabelStr(shape.into()))
+        Some(dot2::label::Text::LabelStr(shape.into()))
     }
 
-    fn node_style(&'a self, _: &Nd) -> dot::Style {
-        dot::Style::Rounded
+    fn node_style(&'a self, _: &Nd) -> dot2::Style {
+        dot2::Style::Rounded
     }
 
-    fn node_color(&'a self, n: &Nd) -> Option<dot::LabelText<'a>> {
+    fn node_color(&'a self, n: &Nd) -> Option<dot2::label::Text<'a>> {
         let node = match self.node(*n) {
             Some(node) => node,
             None => return None,
@@ -313,21 +340,46 @@ impl<'a> dot::Labeller<'a, Nd, Ed<'a>> for Graph {
         if node.executed {
             None
         } else {
-            Some(dot::LabelText::LabelStr("gray".into()))
+            Some(dot2::label::Text::LabelStr("gray".into()))
         }
     }
 
-    fn kind(&self) -> dot::Kind {
-        dot::Kind::Graph
+    fn kind(&self) -> dot2::Kind {
+        dot2::Kind::Graph
     }
 }
 
-impl<'a> dot::GraphWalk<'a, Nd, Ed<'a>> for Graph {
-    fn nodes(&self) -> dot::Nodes<'a, Nd> {
+impl<'a> dot2::GraphWalk<'a> for Graph {
+    type Node = Nd;
+    type Edge = Ed<'a>;
+    type Subgraph = Su<'a>;
+
+    fn subgraphs(&'a self) -> dot2::Subgraphs<'a, Su<'a>> {
+        let mut s: Vec<String> = self
+            .nodes
+            .iter()
+            .filter_map(|n| n.subplan.clone())
+            .collect();
+
+        s.dedup();
+
+        s.into()
+    }
+
+    fn subgraph_nodes(&'a self, s: &Su<'a>) -> dot2::Nodes<'a, Nd> {
+        self.nodes
+            .iter()
+            .enumerate()
+            .filter(|(_, n)| n.subplan == Some(s.to_string()))
+            .map(|(k, _)| k)
+            .collect()
+    }
+
+    fn nodes(&self) -> dot2::Nodes<'a, Nd> {
         (0..self.nodes.len()).collect()
     }
 
-    fn edges(&'a self) -> dot::Edges<'a, Ed<'a>> {
+    fn edges(&'a self) -> dot2::Edges<'a, Ed<'a>> {
         self.edges.iter().collect()
     }
 
