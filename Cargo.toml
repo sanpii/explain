@@ -2,7 +2,7 @@
 name = "explain"
 version = "1.3.0"
 authors = ["Sanpi <sanpi@homecomputing.fr>"]
-edition = "2018"
+edition = "2021"
 homepage = "https://github.com/sanpii/explain"
 repository = "https://github.com/sanpii/explain.git"
 
