@@ -7,9 +7,9 @@ pub(crate) struct Explain {
     #[serde(rename = "Total Runtime", default)]
     pub total_runtime: Option<f32>,
     #[serde(rename = "Planning Time", default)]
-    pub planning_time: Option<f32>,
+    pub _planning_time: Option<f32>,
     #[serde(rename = "Triggers", default)]
-    pub triggers: Vec<Trigger>,
+    pub _triggers: Vec<Trigger>,
 }
 
 #[derive(Debug, serde::Deserialize)]
@@ -17,25 +17,25 @@ pub(crate) struct Plan {
     #[serde(rename = "Actual Loops", default)]
     pub actual_loops: Option<usize>,
     #[serde(rename = "Actual Startup Time", default)]
-    pub actual_startup_time: Option<f32>,
+    pub _actual_startup_time: Option<f32>,
     #[serde(rename = "Actual Total Time", default)]
     pub actual_total_time: Option<f32>,
     #[serde(flatten)]
     pub node: Node,
     #[serde(rename = "Output", default)]
-    pub output: Vec<String>,
+    pub _output: Vec<String>,
     #[serde(rename = "Parallel Aware", default)]
-    pub parallel_aware: bool,
+    pub _parallel_aware: bool,
     #[serde(rename = "Parent Relationship")]
     pub parent_relationship: Option<String>,
     #[serde(rename = "Plan Rows")]
     pub rows: u32,
     #[serde(rename = "Plan Width")]
-    pub width: u32,
+    pub _width: u32,
     #[serde(rename = "Plans", default)]
     pub plans: Vec<Plan>,
     #[serde(rename = "Startup Cost")]
-    pub startup_cost: f32,
+    pub _startup_cost: f32,
     #[serde(rename = "Subplan Name")]
     pub subplan: Option<String>,
     #[serde(rename = "Total Cost")]
@@ -274,25 +274,25 @@ impl std::fmt::Display for Relation {
 #[derive(Debug, serde::Deserialize)]
 pub(crate) struct Trigger {
     #[serde(rename = "Trigger Name")]
-    name: String,
+    _name: String,
     #[serde(rename = "Relation")]
-    relation: String,
+    _relation: String,
     #[serde(rename = "Time")]
-    time: f32,
+    _time: f32,
     #[serde(rename = "Calls")]
-    calls: u32,
+    _calls: u32,
 }
 
 #[derive(Debug, serde::Deserialize)]
 pub(crate) struct Worker {
     #[serde(rename = "Worker Number")]
-    number: usize,
+    _number: usize,
     #[serde(rename = "Actual Startup Time")]
-    actual_startup_time: f32,
+    _actual_startup_time: f32,
     #[serde(rename = "Actual Total Time")]
-    actual_total_time: f32,
+    _actual_total_time: f32,
     #[serde(rename = "Actual Rows")]
-    actual_rows: usize,
+    _actual_rows: usize,
     #[serde(rename = "Actual Loops")]
-    actual_loops: usize,
+    _actual_loops: usize,
 }
