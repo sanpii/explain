@@ -115,7 +115,7 @@ fn try_connect(opt: &Opt) -> elephantry::Result<elephantry::Pool> {
             Err(err) => {
                 if opt.password && &format!("{}", err) == "invalid configuration: password missing"
                 {
-                    let password = rpassword::prompt_password_stdout("Password: ").unwrap();
+                    let password = rpassword::prompt_password("Password: ").unwrap();
                     config.password = Some(password.trim_matches('\n').to_string());
 
                     elephantry::Pool::from_config(&config)
