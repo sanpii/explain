@@ -38,7 +38,7 @@ impl Graph {
 
         let mut node = Node::from(id, plan);
         if node.subplan.is_none() {
-            node.subplan = root.map(|x| x.subplan.clone()).flatten();
+            node.subplan = root.and_then(|x| x.subplan.clone());
         }
 
         if node.cost > self.max_cost {
