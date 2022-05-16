@@ -5,6 +5,7 @@ authors = ["Sanpi <sanpi@homecomputing.fr>"]
 edition = "2021"
 homepage = "https://github.com/sanpii/explain"
 repository = "https://github.com/sanpii/explain.git"
+rust-version = "1.59"
 
 [dependencies]
 dot2 = "0.1"

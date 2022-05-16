@@ -6,10 +6,9 @@ pub(crate) fn graph(explain: &crate::Explain) -> String {
 graph "" {{
     node[shape=plain,style=rounded];
 
-    {}
+    {s}
 }}
-"#,
-        s
+"#
     )
 }
 
@@ -42,9 +41,9 @@ fn plan(root: &crate::Plan, root_id: Option<u32>, plan: &crate::Plan) -> (u32, S
             .trunc();
 
         if time < 1. {
-            format!("<td>&lt; 1 ms | {} %</td>", time_percent)
+            format!("<td>&lt; 1 ms | {time_percent} %</td>")
         } else {
-            format!("<td>{} ms | {} %</td>", time, time_percent)
+            format!("<td>{time} ms | {time_percent} %</td>")
         }
     } else {
         String::new()
@@ -64,19 +63,13 @@ node{id}[
 ];
 
 {children}"#,
-        id = id,
         ty = plan.node,
-        info = info,
         score = plan.total_cost,
-        percent = percent,
-        color = color,
         row = plan.rows,
-        time = time,
-        children = children
     );
 
     if let Some(root_id) = root_id {
-        node.push_str(&format!("node{} -- node{}\n", root_id, id));
+        node.push_str(&format!("node{root_id} -- node{id}\n"));
     }
 
     (id, node)
@@ -86,7 +79,7 @@ fn color(percent: f32) -> String {
     let hue = (100. - percent * 100.) * 1.2 / 360.;
     let (red, green, blue) = hsl_to_rgb(hue, 0.9, 0.4);
 
-    format!("#{:02x}{:02x}{:02x}", red, green, blue)
+    format!("#{red:02x}{green:02x}{blue:02x}")
 }
 
 fn hsl_to_rgb(hue: f32, saturation: f32, lightness: f32) -> (u8, u8, u8) {
@@ -143,9 +136,9 @@ fn info(plan: &crate::Plan) -> String {
             join_type,
             hash_cond,
             ..
-        } => format!("{} join on {}", join_type, hash_cond),
+        } => format!("{join_type} join on {hash_cond}"),
         crate::Node::Sort { keys, .. } => format!("by {}", keys.join(", ")),
-        crate::Node::SeqScan { relation, .. } => format!("on {}", relation),
+        crate::Node::SeqScan { relation, .. } => format!("on {relation}"),
         _ => String::new(),
     }
 }

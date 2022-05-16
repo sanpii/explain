@@ -77,10 +77,8 @@ fn main() -> Result {
         serde_json::from_str(&query)?
     } else {
         let analyse = if opt.analyse { ", analyse" } else { "" };
-        let explain_query = format!(
-            "explain (format json, costs, verbose, summary{}) {}",
-            analyse, query
-        );
+        let explain_query =
+            format!("explain (format json, costs, verbose, summary{analyse}) {query}");
 
         let client = try_connect(&opt)?;
 
@@ -113,8 +111,7 @@ fn try_connect(opt: &Opt) -> elephantry::Result<elephantry::Pool> {
         match elephantry::Pool::from_config(&config) {
             Ok(client) => Ok(client),
             Err(err) => {
-                if opt.password && &format!("{}", err) == "invalid configuration: password missing"
-                {
+                if opt.password && &format!("{err}") == "invalid configuration: password missing" {
                     let password = rpassword::prompt_password("Password: ").unwrap();
                     config.password = Some(password.trim_matches('\n').to_string());
 

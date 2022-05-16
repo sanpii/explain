@@ -199,7 +199,7 @@ impl std::fmt::Display for Node {
             Self::WorkTableScan { .. } => "WorkTable Scan",
         };
 
-        write!(f, "{}", s)
+        write!(f, "{s}")
     }
 }
 
@@ -247,7 +247,7 @@ impl std::fmt::Display for JoinType {
             Self::Semi => "semi",
         };
 
-        write!(f, "{}", s)
+        write!(f, "{s}")
     }
 }
 

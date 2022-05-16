@@ -83,7 +83,7 @@ impl Graph {
         let hue = (100. - percent * 100.) * 1.2 / 360.;
         let (red, green, blue) = Self::hsl_to_rgb(hue, 0.9, 0.4);
 
-        format!("#{:02x}{:02x}{:02x}", red, green, blue)
+        format!("#{red:02x}{green:02x}{blue:02x}")
     }
 
     fn hsl_to_rgb(hue: f32, saturation: f32, lightness: f32) -> (u8, u8, u8) {
@@ -175,9 +175,9 @@ impl Node {
                 join_type,
                 hash_cond,
                 ..
-            } => format!("{} join on {}", join_type, hash_cond),
+            } => format!("{join_type} join on {hash_cond}"),
             crate::Node::Sort { keys, .. } => format!("by {}", keys.join(", ")),
-            crate::Node::SeqScan { relation, .. } => format!("on {}", relation),
+            crate::Node::SeqScan { relation, .. } => format!("on {relation}"),
             _ => String::new(),
         };
 
@@ -238,7 +238,7 @@ impl<'a> dot2::Labeller<'a> for Graph {
     }
 
     fn subgraph_label(&'a self, s: &Su<'a>) -> dot2::label::Text<'a> {
-        let label = format!("<b>{}</b>", s);
+        let label = format!("<b>{s}</b>");
 
         dot2::label::Text::HtmlStr(label.into())
     }
@@ -252,7 +252,7 @@ impl<'a> dot2::Labeller<'a> for Graph {
     }
 
     fn node_id(&'a self, n: &Nd) -> dot2::Result<dot2::Id<'a>> {
-        dot2::Id::new(format!("node{}", n))
+        dot2::Id::new(format!("node{n}"))
     }
 
     fn node_label<'b>(&'b self, n: &Nd) -> dot2::Result<dot2::label::Text<'b>> {
@@ -263,9 +263,9 @@ impl<'a> dot2::Labeller<'a> for Graph {
         let bgcolor = if percent < 0.1 {
             String::new()
         } else if percent > 0.99 {
-            format!("bgcolor=\"{}\"", color)
+            format!("bgcolor=\"{color}\"")
         } else {
-            format!("bgcolor=\"{};{:.2}:white\"", color, percent)
+            format!("bgcolor=\"{color};{percent:.2}:white\"")
         };
 
         let time = if let Some(time) = node.time {
@@ -274,14 +274,11 @@ impl<'a> dot2::Labeller<'a> for Graph {
             if !node.executed {
                 "<td><font color=\"gray\">Never executed</font></td>".to_string()
             } else if time < 1. {
-                format!("<td>&lt; 1 ms | {} %</td>", time_percent)
+                format!("<td>&lt; 1 ms | {time_percent} %</td>")
             } else {
                 let color = Self::duration_color(time_percent);
 
-                format!(
-                    "<td bgcolor=\"{}\">{:.2} ms | {} %</td>",
-                    color, time, time_percent
-                )
+                format!("<td bgcolor=\"{color}\">{time:.2} ms | {time_percent} %</td>")
             }
         } else {
             String::new()
@@ -289,8 +286,8 @@ impl<'a> dot2::Labeller<'a> for Graph {
 
         let mut label = r#"<table border="0" cellborder="0" cellspacing="5">"#.to_string();
         label.push_str(&format!(
-            r#"<tr><td align="left"><b>{}</b></td>{}</tr>"#,
-            node.ty, time
+            r#"<tr><td align="left"><b>{}</b></td>{time}</tr>"#,
+            node.ty
         ));
         label.push_str(&format!(
             r#"<tr><td colspan="2" align="left">{}</td></tr>"#,
