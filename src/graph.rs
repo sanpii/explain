@@ -256,6 +256,8 @@ impl<'a> dot2::Labeller<'a> for Graph {
     }
 
     fn node_label<'b>(&'b self, n: &Nd) -> dot2::Result<dot2::label::Text<'b>> {
+        use std::fmt::Write;
+
         let node = self.node(*n).unwrap();
         let percent = node.cost / self.max_cost;
         let color = Self::color(percent);
@@ -285,29 +287,14 @@ impl<'a> dot2::Labeller<'a> for Graph {
         };
 
         let mut label = r#"<table border="0" cellborder="0" cellspacing="5">"#.to_string();
-        label.push_str(&format!(
-            r#"<tr><td align="left"><b>{}</b></td>{time}</tr>"#,
-            node.ty
-        ));
-        label.push_str(&format!(
-            r#"<tr><td colspan="2" align="left">{}</td></tr>"#,
-            node.info
-        ));
+        write!(label, r#"<tr><td align="left"><b>{}</b></td>{time}</tr>"#, node.ty).ok();
+        write!(label, r#"<tr><td colspan="2" align="left">{}</td></tr>"#, node.info).ok();
         if node.n_workers > 0 {
-            label.push_str(&format!(
-                r#"<tr><td colspan="2" align="left">Workers: {}</td></tr>"#,
-                node.n_workers
-            ));
+            write!(label, r#"<tr><td colspan="2" align="left">Workers: {}</td></tr>"#, node.n_workers).ok();
         }
 
-        label.push_str(&format!(
-            r#"<tr><td colspan="2" border="1" {}>Cost: {:.02}</td></tr>"#,
-            bgcolor, node.cost
-        ));
-        label.push_str(&format!(
-            r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#,
-            node.rows
-        ));
+        write!(label, r#"<tr><td colspan="2" border="1" {}>Cost: {:.02}</td></tr>"#, bgcolor, node.cost).ok();
+        write!(label, r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#, node.rows).ok();
         label.push_str("</table>");
 
         Ok(dot2::label::Text::HtmlStr(label.into()))
