@@ -9,36 +9,39 @@ use errors::*;
 use explain::*;
 
 #[derive(Clone, Debug, Parser)]
+#[command(disable_help_flag = true)]
 struct Opt {
     /// this option executes explain analyse
     /// /!\ Be carful, that executes the query!
-    #[clap(long)]
+    #[arg(long)]
     analyse: bool,
     /// Specifies the command to execute
-    #[clap(short, long)]
+    #[arg(short, long)]
     command: Option<String>,
     /// Specifies the name of the database to connect to
     dbname: Option<String>,
     /// Don’t execute the query, the input is already an explain plan in JSON
-    #[clap(short = 'n', long)]
+    #[arg(short = 'n', long)]
     dry_run: bool,
     /// Read commands from the file, rather than standard input
-    #[clap(short, long)]
+    #[arg(short, long)]
     file: Option<String>,
+    #[arg(long, action = clap::ArgAction::Help)]
+    help: Option<bool>,
     /// Specifies the host name of the machine on which the server is running
-    #[clap(short, long)]
+    #[arg(short, long)]
     host: Option<String>,
     /// Put output into file
-    #[clap(short, long)]
+    #[arg(short, long)]
     output: Option<String>,
     /// Prompt for a password before connecting to a database
-    #[clap(short = 'W', long)]
+    #[arg(short = 'W', long)]
     password: bool,
     /// Specifies the TCP port on which the server is listening for connections
-    #[clap(short, long)]
+    #[arg(short, long)]
     port: Option<String>,
     /// Connect to the database as the user
-    #[clap(short = 'U', long)]
+    #[arg(short = 'U', long)]
     user: Option<String>,
 }
 
