@@ -287,14 +287,39 @@ impl<'a> dot2::Labeller<'a> for Graph {
         };
 
         let mut label = r#"<table border="0" cellborder="0" cellspacing="5">"#.to_string();
-        write!(label, r#"<tr><td align="left"><b>{}</b></td>{time}</tr>"#, node.ty).ok();
-        write!(label, r#"<tr><td colspan="2" align="left">{}</td></tr>"#, node.info).ok();
+        write!(
+            label,
+            r#"<tr><td align="left"><b>{}</b></td>{time}</tr>"#,
+            node.ty
+        )
+        .ok();
+        write!(
+            label,
+            r#"<tr><td colspan="2" align="left">{}</td></tr>"#,
+            node.info
+        )
+        .ok();
         if node.n_workers > 0 {
-            write!(label, r#"<tr><td colspan="2" align="left">Workers: {}</td></tr>"#, node.n_workers).ok();
+            write!(
+                label,
+                r#"<tr><td colspan="2" align="left">Workers: {}</td></tr>"#,
+                node.n_workers
+            )
+            .ok();
         }
 
-        write!(label, r#"<tr><td colspan="2" border="1" {}>Cost: {:.02}</td></tr>"#, bgcolor, node.cost).ok();
-        write!(label, r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#, node.rows).ok();
+        write!(
+            label,
+            r#"<tr><td colspan="2" border="1" {}>Cost: {:.02}</td></tr>"#,
+            bgcolor, node.cost
+        )
+        .ok();
+        write!(
+            label,
+            r#"<tr><td colspan="2" align="left">Rows: {}</td></tr>"#,
+            node.rows
+        )
+        .ok();
         label.push_str("</table>");
 
         Ok(dot2::label::Text::HtmlStr(label.into()))
