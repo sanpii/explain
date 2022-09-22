@@ -5,6 +5,8 @@ pub enum Error {
     #[error("{0}")]
     Convert(#[from] std::num::ParseIntError),
     #[error("{0}")]
+    Fmt(#[from] std::fmt::Error),
+    #[error("{0}")]
     Io(#[from] std::io::Error),
     #[error("{0}")]
     Elephantry(#[from] elephantry::Error),
