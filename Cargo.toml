@@ -8,7 +8,7 @@ repository = "https://github.com/sanpii/explain.git"
 rust-version = "1.59"
 
 [dependencies]
-dot2 = "0.1"
+dot2 = "1.0"
 human-panic = "1.0"
 rpassword = "7.0"
 serde_json = "1.0"
