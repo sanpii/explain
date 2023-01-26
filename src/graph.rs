@@ -27,12 +27,12 @@ impl Graph {
             .execution_time
             .or(explain.total_runtime)
             .or(explain.plan.actual_total_time);
-        graph.plan(explain, None, &explain.plan);
+        graph.plan(None, &explain.plan);
 
         graph
     }
 
-    fn plan(&mut self, explain: &crate::Explain, root: Option<&Node>, plan: &crate::Plan) {
+    fn plan(&mut self, root: Option<&Node>, plan: &crate::Plan) {
         let id = self.current_id;
         self.current_id += 1;
 
@@ -51,7 +51,7 @@ impl Graph {
         }
 
         for child in &plan.plans {
-            self.plan(explain, Some(&node), child);
+            self.plan(Some(&node), child);
         }
     }
 
