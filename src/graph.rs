@@ -87,7 +87,9 @@ impl Graph {
     }
 
     fn hsl_to_rgb(hue: f32, saturation: f32, lightness: f32) -> (u8, u8, u8) {
-        let (red, green, blue) = if saturation != 0. {
+        let (red, green, blue) = if saturation == 0. {
+            (lightness, lightness, lightness)
+        } else {
             let q = if lightness < 0.5 {
                 lightness * (1. + saturation)
             } else {
@@ -100,8 +102,6 @@ impl Graph {
                 Self::hue2rgb(p, q, hue),
                 Self::hue2rgb(p, q, hue - 1. / 3.),
             )
-        } else {
-            (lightness, lightness, lightness)
         };
 
         (
