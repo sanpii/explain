@@ -100,6 +100,7 @@ pub(crate) enum Node {
     Limit {},
     LockRows {},
     Materialize {},
+    Memoize {},
     #[serde(rename = "Merge Append")]
     MergeAppend {},
     #[serde(rename = "Merge Join")]
@@ -178,6 +179,7 @@ impl std::fmt::Display for Node {
             Self::Limit { .. } => "Limit",
             Self::LockRows { .. } => "LockRows",
             Self::Materialize { .. } => "Materialize",
+            Self::Memoize { .. } => "Memoize",
             Self::MergeAppend { .. } => "Merge Append",
             Self::MergeJoin { .. } => "Merge Join",
             Self::ModifyTable { .. } => "ModifyTable",
