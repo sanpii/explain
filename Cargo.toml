@@ -12,7 +12,7 @@ dot2 = "1.0"
 human-panic = "2.0"
 rpassword = "7.0"
 serde_json = "1.0"
-thiserror = "1.0"
+thiserror = "2.0"
 
 [dependencies.clap]
 version = "4.0"
