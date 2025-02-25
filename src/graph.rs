@@ -326,10 +326,7 @@ impl<'a> dot2::Labeller<'a> for Graph {
     }
 
     fn node_shape(&'a self, n: &Nd) -> Option<dot2::label::Text<'a>> {
-        let node = match self.node(*n) {
-            Some(node) => node,
-            None => return None,
-        };
+        let node = self.node(*n)?;
 
         let shape = if node.n_workers > 0 { "folder" } else { "box" };
 
@@ -341,10 +338,7 @@ impl<'a> dot2::Labeller<'a> for Graph {
     }
 
     fn node_color(&'a self, n: &Nd) -> Option<dot2::label::Text<'a>> {
-        let node = match self.node(*n) {
-            Some(node) => node,
-            None => return None,
-        };
+        let node = self.node(*n)?;
 
         if node.executed {
             None
