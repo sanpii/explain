@@ -47,14 +47,14 @@ struct Opt {
 
 impl From<Opt> for elephantry::Config {
     fn from(opt: Opt) -> Self {
-        Self {
-            host: opt.host,
-            user: opt.user,
-            dbname: opt.dbname,
-            port: opt.port,
+        let mut config = Self::new();
 
-            ..Default::default()
-        }
+        config.host = opt.host;
+        config.user = opt.user;
+        config.dbname = opt.dbname;
+        config.port = opt.port;
+
+        config
     }
 }
 
