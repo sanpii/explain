@@ -17,8 +17,10 @@ $(TARGET):
 	$(CARGO) build $(CARGO_FLAGS)
 
 install:
-	install --directory $(PREFIX)/bin
-	install $(TARGET) $(PREFIX)/bin/
+	install -Dm755 $(TARGET) $(PREFIX)/bin/
+	COMPLETE=bash $(TARGET) | install -Dm0644 /dev/stdin $(PREFIX)/share/bash-completion/completions/explain
+	COMPLETE=fish $(TARGET) | install -Dm0644 /dev/stdin $(PREFIX)/share/fish/vendor_completions.d/rustic.fish/explain.fish
+	COMPLETE=zsh $(TARGET) | install -Dm0644 /dev/stdin $(PREFIX)/share/zsh/site-functions/_explain
 .PHONY: install
 
 examples: $(EXAMPLES:.json=.png)

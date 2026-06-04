@@ -19,17 +19,18 @@ struct Opt {
     #[arg(short, long)]
     command: Option<String>,
     /// Specifies the name of the database to connect to
+    #[arg(short, long, add = clap_complete::engine::ArgValueCompleter::new(complete_dbname))]
     dbname: Option<String>,
     /// Don’t execute the query, the input is already an explain plan in JSON
     #[arg(short = 'n', long)]
     dry_run: bool,
     /// Read commands from the file, rather than standard input
-    #[arg(short, long)]
+    #[arg(short, long, value_hint = clap::ValueHint::FilePath)]
     file: Option<String>,
     #[arg(long, action = clap::ArgAction::Help)]
     help: Option<bool>,
     /// Specifies the host name of the machine on which the server is running
-    #[arg(short, long)]
+    #[arg(short, long, value_hint = clap::ValueHint::Hostname)]
     host: Option<String>,
     /// Put output into file
     #[arg(short, long)]
@@ -41,8 +42,30 @@ struct Opt {
     #[arg(short, long)]
     port: Option<String>,
     /// Connect to the database as the user
-    #[arg(short = 'U', long)]
+    #[arg(short = 'U', long, value_hint = clap::ValueHint::Username)]
     user: Option<String>,
+}
+
+fn complete_dbname(current: &std::ffi::OsStr) -> Vec<clap_complete::CompletionCandidate> {
+    let Ok(config) = elephantry::Config::from_env() else {
+        return Vec::new();
+    };
+
+    let Ok(client) = elephantry::Pool::from_config(&config) else {
+        return Vec::new();
+    };
+
+    let Ok(databases) = elephantry::inspect::databases(&client) else {
+        return Vec::new();
+    };
+
+    databases.iter()
+        .filter_map(|x| if x.name.starts_with(current.to_str().unwrap_or_default()) {
+            Some(clap_complete::CompletionCandidate::new(&x.name))
+        } else {
+            None
+        })
+        .collect()
 }
 
 impl From<Opt> for elephantry::Config {
@@ -60,6 +83,8 @@ impl From<Opt> for elephantry::Config {
 
 fn main() -> Result {
     human_panic::setup_panic!();
+
+    clap_complete::CompleteEnv::with_factory(<Opt as clap::CommandFactory>::command).complete();
 
     let opt = Opt::parse();
 
