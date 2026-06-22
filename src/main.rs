@@ -59,11 +59,14 @@ fn complete_dbname(current: &std::ffi::OsStr) -> Vec<clap_complete::CompletionCa
         return Vec::new();
     };
 
-    databases.iter()
-        .filter_map(|x| if x.name.starts_with(current.to_str().unwrap_or_default()) {
-            Some(clap_complete::CompletionCandidate::new(&x.name))
-        } else {
-            None
+    databases
+        .iter()
+        .filter_map(|x| {
+            if x.name.starts_with(current.to_str().unwrap_or_default()) {
+                Some(clap_complete::CompletionCandidate::new(&x.name))
+            } else {
+                None
+            }
         })
         .collect()
 }
