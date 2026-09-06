@@ -21,6 +21,23 @@ lint:clippy:
         - rustup component add clippy
     script: cargo clippy -- --deny warnings
 
+lint:elephantry:
+    stage: lint
+    before_script:
+          - rustup toolchain install nightly
+          - apt update -yqq
+          - apt install -yqq postgresql-common
+          - /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+          - apt install -yqq clang libpq-dev sudo postgresql-18
+          - cargo install cargo-dylint dylint-link
+          - echo "en_US UTF-8" > /etc/locale.gen
+          - locale-gen en_US.UTF-8
+          - sudo -u postgres pg_ctlcluster 18 main start
+          - sudo -u postgres psql --command "create role root WITH LOGIN ENCRYPTED PASSWORD '1234' SUPERUSER;";
+          - sudo -u postgres psql --command "create database root with owner root;";
+          - export PGHOST=localhost PGPASSWORD=1234
+    script: cargo dylint --git https://github.com/elephantry/lints --all
+
 .test: &test
     stage: test
     before_script:

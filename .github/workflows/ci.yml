@@ -34,6 +34,21 @@ jobs:
       - name: Run clippy
         run: cargo clippy --all-features -- --deny warnings
 
+  lint_elephantry:
+    name: Elephantry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@nightly
+      - uses: ikalnytskyi/action-setup-postgres@v8
+        id: postgres
+      - name: Install dylint
+        run: cargo install cargo-dylint dylint-link
+      - name: Run lints
+        run: cargo dylint --git https://github.com/elephantry/lints --all
+        env:
+          PGSERVICE: ${{ steps.postgres.outputs.service-name }}
+
   tests:
     name: Tests
     strategy:
