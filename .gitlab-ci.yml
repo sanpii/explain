@@ -38,6 +38,12 @@ lint:elephantry:
           - export PGHOST=localhost PGPASSWORD=1234
     script: cargo dylint --git https://github.com/elephantry/lints --all
 
+lint:shear:
+    stage: lint
+    before_script:
+        - cargo install cargo-shear
+    script: cargo shear --deny-warnings
+
 .test: &test
     stage: test
     before_script:

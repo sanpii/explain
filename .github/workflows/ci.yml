@@ -49,6 +49,18 @@ jobs:
         env:
           PGSERVICE: ${{ steps.postgres.outputs.service-name }}
 
+  lint_shear:
+    name: Shear
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install cargo-shear
+        run: cargo install cargo-shear
+      - name: Run cargo-shear
+        run: cargo shear --deny-warnings
+
   tests:
     name: Tests
     strategy:
